@@ -9,90 +9,46 @@
                 <form id="addForm">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label class="form-label" for="bidang">Bidang</label>
-                            <select class="form-control " id="bidang" name="bidang">
-                                <option value="" selected disabled>Pilih bidang</option>
-                                <option value="Bidang Dana">Bidang Dana</option>Z
-                                <option value="Bidang Diakonia">Bidang Diakonia</option>Z
+                            <label class="form-label" for="bidang">Jenis Anggaran</label>
+                            <select class="form-control " id="jenis_anggaran" name="jenis_anggaran">
+                                <option value="" selected disabled>Pilih Jenis Anggaran</option>
+                                <option value="Pendapatan Rutin">Pendapatan Rutin</option>
+                                <option value="Pendapatan Program">Pendapatan Program</option>
+                                <option value="Pendapatan Lain-lain">Pendapatan Lain-lain</option>
+                                <option value="Belanja Rutin">Belanja Rutin</option>
+                                <option value="Biaya Program">Biaya Program</option>
+                                <option value="Belanja lain-lain">Belanja lain-lain</option>
                             </select>
                             <div class="invalid-feedback">
 
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="sumber_anggaran">Sumber Anggaran</label>
+                                <input type="text" class="form-control" id="sumber_anggaran" name="sumber_anggaran"
+                                    placeholder="Sumber Anggaran">
+                                <div class="invalid-feedback">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="nama_kegiatan">Nama Kegiatan</label>
-                                <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan"
-                                    placeholder="Nama Kegiatan">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="waktu_dan_tempat">Waktu Dan Tempat</label>
-                                <input type="text" class="form-control" id="waktu_dan_tempat" name="waktu_dan_tempat"
-                                    placeholder="Waktu Dan Tempat">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                    </div>
-                    <!-- end row -->
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tujuan</label>
-                                <textarea class="form-control" placeholder="Tujuan" rows="3" name="tujuan" id="tujuan"></textarea>
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="sasaran_belanja">Sasaran Belanja</label>
-                                {{-- <input type="text" class="form-control" id="sasaran_belanja" name="sasaran_belanja"
-                                    placeholder="Sasaran Belanja"> --}}
-                                <textarea class="form-control" placeholder="Sasaran Belanja" rows="3" name="sasaran_belanja" id="sasaran_belanja"></textarea>
+                                <label class="form-label">Nominal Anggaran</label>
+                                <input type="number" class="form-control" id="nominal_anggaran" name="nominal_anggaran"
+                                    placeholder="Nominal Anggaran">
                                 <div class="invalid-feedback">
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="sumber_biaya">Sumber Biaya</label>
-                                <input type="text" class="form-control" id="sumber_biaya" name="sumber_biaya"
-                                    placeholder="Sumber Biaya">
-                                <div class="invalid-feedback">
 
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="penanggung_jawab">Penanggung Jawab</label>
-                                <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab"
-                                    placeholder="Penanggung Jawab">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- end row -->
                     <div class="float-end">
                         <button type="button" class="btn btn-light waves-effect mx-2"
@@ -100,11 +56,11 @@
                         <button class="btn btn-primary  " type="submit">Simpan</button>
                     </div>
                 </form>
-                <!-- end form -->
+
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 
 
 @push('scripts')
@@ -117,7 +73,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/bidang-tiga/store', {
+                const response = await fetch('/anggaran-belanja/store', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -167,6 +123,7 @@
                     $('#datatable').DataTable().ajax.reload();
                     $('#addModal').modal('hide');
                 }
+
 
             } catch (error) {
                 console.error(error);

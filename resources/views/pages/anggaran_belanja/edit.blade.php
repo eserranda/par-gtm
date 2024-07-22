@@ -2,95 +2,66 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="myModalLabel">Edit Data </h5>
+                <h5 class="modal-title mt-0" id="myModalLabel">Tambah Data </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="editForm">
                     <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="edit_jenis_anggaran">Jenis Anggaran</label>
+                            <select class="form-control " id="edit_jenis_anggaran" name="edit_jenis_anggaran">
+                                <option value="" selected disabled>Pilih Jenis Anggaran</option>
+                                <option value="Pendapatan Rutin">Pendapatan Rutin</option>
+                                <option value="Pendapatan Program">Pendapatan Program</option>
+                                <option value="Pendapatan Lain-lain">Pendapatan Lain-lain</option>
+                                <option value="Belanja Rutin">Belanja Rutin</option>
+                                <option value="Biaya Program">Biaya Program</option>
+                                <option value="Belanja lain-lain">Belanja lain-lain</option>
+                            </select>
+                            <div class="invalid-feedback">
+
+                            </div>
+                        </div>
+
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="nama_kegiatan">Nama Kegiatan</label>
+                                <label class="form-label" for="edit_sumber_anggaran">Sumber Anggaran</label>
                                 <input type="hidden" class="form-control" id="edit_id" name="id">
-                                <input type="text" class="form-control" id="edit_nama_kegiatan"
-                                    name="edit_nama_kegiatan">
+                                <input type="text" class="form-control" id="edit_sumber_anggaran"
+                                    name="edit_sumber_anggaran">
                                 <div class="invalid-feedback">
 
                                 </div>
                             </div>
                         </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="waktu_dan_tempat">Waktu Dan Tempat</label>
-                                <input type="text" class="form-control" id="edit_waktu_dan_tempat"
-                                    name="edit_waktu_dan_tempat">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
                     </div>
-                    <!-- end row -->
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Tujuan</label>
-                                <textarea class="form-control" rows="3" name="edit_tujuan" id="edit_tujuan"></textarea>
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="sasaran_belanja">Sasaran Belanja</label>
-                                <textarea class="form-control" rows="3" name="edit_sasaran_belanja" id="edit_sasaran_belanja"
-                                    placeholder="Sasaran Belanja"></textarea>
+                                <label class="form-label">Nominal Anggaran</label>
+                                <input type="number" class="form-control" id="edit_nominal_anggaran"
+                                    name="edit_nominal_anggaran">
                                 <div class="invalid-feedback">
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="sumber_biaya">Sumber Biaya</label>
-                                <input type="text" class="form-control" id="edit_sumber_biaya"
-                                    name="edit_sumber_biaya">
-                                <div class="invalid-feedback">
 
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="penanggung_jawab">Penanggung Jawab</label>
-                                <input type="text" class="form-control" id="edit_penanggung_jawab"
-                                    name="edit_penanggung_jawab">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- end row -->
                     <div class="float-end">
                         <button type="button" class="btn btn-light waves-effect mx-2"
                             data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary" type="submit">Update</button>
+                        <button class="btn btn-primary  " type="submit">Simpan</button>
                     </div>
                 </form>
-                <!-- end form -->
+
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 
 
 @push('scripts')
@@ -98,28 +69,30 @@
         document.getElementById('editForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            let formData = new FormData(event.target);
-
-            var id = document.getElementById('edit_id').value;
+            const form = event.target;
+            const formData = new FormData(form);
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/bidang-satu/update', {
+                const response = await fetch('/anggaran-belanja/update', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        'X-CSRF-TOKEN': csrfToken
                     },
                     body: formData,
                 });
 
                 const data = await response.json();
+                console.log(data);
                 if (!data.success) {
                     Object.keys(data.messages).forEach(fieldName => {
                         const inputField = document.getElementById(fieldName);
                         if (inputField) {
                             inputField.classList.add('is-invalid');
                             if (inputField.nextElementSibling) {
-                                inputField.nextElementSibling.textContent = data.messages[fieldName][0];
+                                inputField.nextElementSibling.textContent = data.messages[
+                                    fieldName][0];
                             }
                         }
                     });
@@ -135,6 +108,7 @@
                             }
                         }
                     });
+
                 } else {
                     const invalidInputs = document.querySelectorAll('.is-invalid');
                     invalidInputs.forEach(invalidInput => {

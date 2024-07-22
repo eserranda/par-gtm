@@ -108,22 +108,22 @@
 
 @push('scripts')
     <script>
-        async function edit(id) {
-            fetch('/bidang-dua/findById/' + id)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_nama_kegiatan').value = data.nama_kegiatan;
-                    document.getElementById('edit_waktu_dan_tempat').value = data.waktu_dan_tempat;
-                    document.getElementById('edit_tujuan').value = data.tujuan;
-                    document.getElementById('edit_sasaran_belanja').value = data.sasaran_belanja;
-                    document.getElementById('edit_sumber_biaya').value = data.sumber_biaya;
-                    document.getElementById('edit_penanggung_jawab').value = data.penanggung_jawab;
-                })
-                .catch(error => console.error(error));
-            // show modal edit
-            $('#editModal').modal('show');
-        }
+        // async function edit(id) {
+        //     fetch('/bidang-dua/findById/' + id)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('edit_id').value = data.id;
+        //             document.getElementById('edit_nama_kegiatan').value = data.nama_kegiatan;
+        //             document.getElementById('edit_waktu_dan_tempat').value = data.waktu_dan_tempat;
+        //             document.getElementById('edit_tujuan').value = data.tujuan;
+        //             document.getElementById('edit_sasaran_belanja').value = data.sasaran_belanja;
+        //             document.getElementById('edit_sumber_biaya').value = data.sumber_biaya;
+        //             document.getElementById('edit_penanggung_jawab').value = data.penanggung_jawab;
+        //         })
+        //         .catch(error => console.error(error));
+        //     // show modal edit
+        //     $('#editModal').modal('show');
+        // }
 
 
         document.getElementById('addForm').addEventListener('submit', async (event) => {

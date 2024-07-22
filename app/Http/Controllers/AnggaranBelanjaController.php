@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BidangDua;
 use Illuminate\Http\Request;
+use App\Models\AnggaranBelanja;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class BidangDuaController extends Controller
+class AnggaranBelanjaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $bidangFilter = $request->input('bidang');
-
-            $query = BidangDua::query();
-            if ($bidangFilter) {
-                $query->where('bidang', $bidangFilter);
+            $jenisAnggaranFilter = $request->input('jenis_anggaran');
+            $query = AnggaranBelanja::query();
+            if ($jenisAnggaranFilter) {
+                $query->where('jenis_anggaran', $jenisAnggaranFilter);
             }
 
             $data = $query->latest('created_at')->get();
-
-            // $data = BidangDua::latest('created_at')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -35,25 +30,21 @@ class BidangDuaController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages.bidang_dua.index');
+        return view('pages.anggaran_belanja.index');
     }
 
     public function findById($id)
     {
-        $data = BidangDua::find($id);
+        $data = AnggaranBelanja::find($id);
         return response()->json($data);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'bidang' => 'required',
-            'nama_kegiatan' => 'required',
-            'waktu_dan_tempat' => 'required',
-            'tujuan' => 'required',
-            'sasaran_belanja' => 'required',
-            'sumber_biaya' => 'required',
-            'penanggung_jawab' => 'required',
+            'jenis_anggaran' => 'required',
+            'sumber_anggaran' => 'required',
+            'nominal_anggaran' => 'required',
         ], [
             'required' => ':attribute harus diisi',
         ]);
@@ -65,14 +56,10 @@ class BidangDuaController extends Controller
             ], 422);
         }
 
-        $save = BidangDua::create([
-            'bidang' => $request->bidang,
-            'nama_kegiatan' => $request->nama_kegiatan,
-            'waktu_dan_tempat' => $request->waktu_dan_tempat,
-            'tujuan' => $request->tujuan,
-            'sasaran_belanja' => $request->sasaran_belanja,
-            'sumber_biaya' => $request->sumber_biaya,
-            'penanggung_jawab' => $request->penanggung_jawab,
+        $save = AnggaranBelanja::create([
+            'jenis_anggaran' => $request->jenis_anggaran,
+            'sumber_anggaran' => $request->sumber_anggaran,
+            'nominal_anggaran' => $request->nominal_anggaran,
         ]);
 
         if ($save) {
@@ -88,17 +75,12 @@ class BidangDuaController extends Controller
         }
     }
 
-
-    public function update(Request $request, BidangDua $bidangDua)
+    public function update(Request $request, AnggaranBelanja $anggaranBelanja)
     {
         $validator = Validator::make($request->all(), [
-            'edit_bidang' => 'required',
-            'edit_nama_kegiatan' => 'required',
-            'edit_waktu_dan_tempat' => 'required',
-            'edit_tujuan' => 'required',
-            'edit_sasaran_belanja' => 'required',
-            'edit_sumber_biaya' => 'required',
-            'edit_penanggung_jawab' => 'required',
+            'edit_jenis_anggaran' => 'required',
+            'edit_sumber_anggaran' => 'required',
+            'edit_nominal_anggaran' => 'required',
         ], [
             'required' => ':attribute harus diisi',
         ]);
@@ -110,14 +92,10 @@ class BidangDuaController extends Controller
             ], 422);
         }
 
-        $update = BidangDua::where('id', $request->input('id'))->update([
-            'bidang' => $request->input('edit_bidang'),
-            'nama_kegiatan' => $request->input('edit_nama_kegiatan'),
-            'waktu_dan_tempat' => $request->input('edit_waktu_dan_tempat'),
-            'tujuan' => $request->input('edit_tujuan'),
-            'sasaran_belanja' => $request->input('edit_sasaran_belanja'),
-            'sumber_biaya' => $request->input('edit_sumber_biaya'),
-            'penanggung_jawab' => $request->input('edit_penanggung_jawab'),
+        $update  = AnggaranBelanja::where('id', $request->input('id'))->update([
+            'jenis_anggaran' => $request->edit_jenis_anggaran,
+            'sumber_anggaran' => $request->edit_sumber_anggaran,
+            'nominal_anggaran' => $request->edit_nominal_anggaran,
         ]);
 
         if ($update) {
@@ -133,10 +111,13 @@ class BidangDuaController extends Controller
         }
     }
 
-    public function destroy(BidangDua $bidangDua, $id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(AnggaranBelanja $anggaranBelanja, $id)
     {
         try {
-            $del_siswa = $bidangDua::findOrFail($id);
+            $del_siswa = $anggaranBelanja::findOrFail($id);
             $del_siswa->delete();
 
             return response()->json(['status' => true, 'message' => 'Data berhasil dihapus'], 200);

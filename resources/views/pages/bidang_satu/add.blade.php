@@ -29,9 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- end col -->
                     </div>
-                    <!-- end row -->
 
                     <div class="row">
                         <div class="col-md-6">
@@ -47,14 +45,14 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="sasaran_belanja">Sasaran Belanja</label>
-                                <input type="text" class="form-control" id="sasaran_belanja" name="sasaran_belanja"
-                                    placeholder="Sasaran Belanja">
+                                <textarea class="form-control" placeholder="Sasaran Belanja" rows="3" name="sasaran_belanja" id="sasaran_belanja"></textarea>
                                 <div class="invalid-feedback">
 
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -78,6 +76,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- end row -->
                     <div class="float-end">
                         <button type="button" class="btn btn-light waves-effect mx-2"
@@ -85,11 +84,11 @@
                         <button class="btn btn-primary  " type="submit">Simpan</button>
                     </div>
                 </form>
-                <!-- end form -->
+
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 
 
 @push('scripts')

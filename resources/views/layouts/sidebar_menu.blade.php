@@ -19,7 +19,7 @@
 
                   <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
-                          <i class="mdi mdi-email-outline"></i>
+                          <i class="mdi mdi-briefcase-clock"></i>
                           <span>Program Kerja</span>
                       </a>
                       <ul class="sub-menu" aria-expanded="false">
@@ -30,6 +30,20 @@
                   </li>
 
                   <li>
+                      <a href="/pengurus" class="waves-effect">
+                          <i class="mdi mdi-account-group"></i>
+                          <span>Pengurus</span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="/anggaran-belanja" class="waves-effect">
+                          <i class="mdi mdi-cash-multiple"></i>
+                          <span>Anggran Belanja</span>
+                      </a>
+                  </li>
+
+                  {{-- <li>
                       <a href="javascript: void(0);" class="waves-effect">
                           <i class="mdi mdi-clipboard-outline"></i>
                           <span class="badge rounded-pill bg-success float-end">6</span>
@@ -43,9 +57,9 @@
                           <li><a href="form-uploads.html">Form File Upload</a></li>
                           <li><a href="form-xeditable.html">Form Xeditable</a></li>
                       </ul>
-                  </li>
+                  </li> --}}
 
-                  <li>
+                  {{-- <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-chart-line"></i>
                           <span>Charts</span>
@@ -71,11 +85,11 @@
                           <li><a href="tables-responsive.html">Responsive Table</a></li>
                           <li><a href="tables-editable.html">Editable Table</a></li>
                       </ul>
-                  </li>
+                  </li> --}}
 
 
 
-                  <li>
+                  {{-- <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-album"></i>
                           <span>Icons</span>
@@ -88,7 +102,7 @@
                           <li><a href="icons-dripicons.html">Dripicons</a></li>
                           <li><a href="icons-typicons.html">Typicons Icons</a></li>
                       </ul>
-                  </li>
+                  </li> --}}
 
                   <li>
                       <a href="javascript: void(0);" class="waves-effect">

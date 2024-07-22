@@ -16,7 +16,7 @@
 @endpush
 
 @section('page_title')
-    Pembinaan dan Kreatif
+    Anggaran Belanja
 @endsection
 @section('content')
     <div class="row">
@@ -26,10 +26,11 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="d-flex align-items-center ">
                             <label class="col-form-label col-md-3">Filter :</label>
-                            <select class="form-select me-2 col-md-1" id="filterBidang">
-                                <option value="" selected disabled>Pilih bidang</option>
-                                <option value="Bidang Pembinaan">Bidang Pembinaan</option>
-                                <option value="Bidang Kreatif">Bidang Kreatif</option>
+                            <select class="form-select me-2 col-md-1" id="filterData">
+                                <option value="" selected disabled>Pilih Jenis Anggaran</option>
+                                <option value="Pendapatan Rutin">Pendapatan</option>
+                                <option value="Belanja Rutin">Belanja</option>
+                                <option value="Biaya Program">Biaya</option>
                             </select>
                             <button type="button" class="btn btn-light waves-effect col-2" id="reload">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20"
@@ -55,12 +56,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Kegiatan</th>
-                                    <th>Waktu</th>
-                                    <th>Tujuan</th>
-                                    <th>Sasaran Belanja</th>
-                                    <th>Sumber Biaya</th>
-                                    <th>Penanggung Jawab</th>
+                                    <th>Jenis Anggran</th>
+                                    <th>Sumber Anggaran</th>
+                                    <th>Nominal </th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -75,8 +73,8 @@
         </div>
     </div>
 
-    @include('pages.bidang_dua.add')
-    @include('pages.bidang_dua.edit')
+    @include('pages.anggaran_belanja.add')
+    @include('pages.anggaran_belanja.edit')
 @endsection
 
 @push('scripts')
@@ -105,17 +103,13 @@
 
     <script>
         function edit(id) {
-            fetch('/bidang-dua/findById/' + id)
+            fetch('/anggaran-belanja/findById/' + id)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_bidang').value = data.bidang
-                    document.getElementById('edit_nama_kegiatan').value = data.nama_kegiatan;
-                    document.getElementById('edit_waktu_dan_tempat').value = data.waktu_dan_tempat;
-                    document.getElementById('edit_tujuan').value = data.tujuan;
-                    document.getElementById('edit_sasaran_belanja').value = data.sasaran_belanja;
-                    document.getElementById('edit_sumber_biaya').value = data.sumber_biaya;
-                    document.getElementById('edit_penanggung_jawab').value = data.penanggung_jawab;
+                    document.getElementById('edit_jenis_anggaran').value = data.jenis_anggaran;
+                    document.getElementById('edit_sumber_anggaran').value = data.sumber_anggaran;
+                    document.getElementById('edit_nominal_anggaran').value = data.nominal_anggaran;
                 })
                 .catch(error => console.error(error));
             // show modal edit
@@ -124,7 +118,7 @@
 
         var datatable;
         $(document).ready(function() {
-            const selectedBidang = $('#filterBidang').val();
+            const selectedFilter = $('#filterData').val();
             datatable = $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -153,7 +147,7 @@
                         }
                     },
                 ],
-                ajax: "{{ route('bidang-dua.index') }}",
+                ajax: "{{ route('anggaran-belanja.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: '#',
@@ -161,33 +155,18 @@
 
                     },
                     {
-                        data: 'nama_kegiatan',
-                        name: 'nama_kegiatan',
+                        data: 'jenis_anggaran',
+                        name: 'jenis_anggaran',
                         orderable: false,
                     },
                     {
-                        data: 'waktu_dan_tempat',
-                        name: 'waktu_dan_tempat',
+                        data: 'sumber_anggaran',
+                        name: 'sumber_anggaran',
                         orderable: false,
                     },
                     {
-                        data: 'tujuan',
-                        name: 'tujuan',
-                        orderable: false,
-                    },
-                    {
-                        data: 'sasaran_belanja',
-                        name: 'sasaran_belanja',
-                        orderable: false,
-                    },
-                    {
-                        data: 'sumber_biaya',
-                        name: 'sumber_biaya',
-                        orderable: false,
-                    },
-                    {
-                        data: 'penanggung_jawab',
-                        name: 'penanggung_jawab',
+                        data: 'nominal_anggaran',
+                        name: 'nominal_anggaran',
                         orderable: false,
                     },
                     {
@@ -199,15 +178,16 @@
                 ],
             });
 
-            $('#filterBidang').on('change', function() {
-                const selectedBidang = $(this).val();
-                datatable.ajax.url('{{ route('bidang-dua.index') }}?bidang=' + selectedBidang)
+            $('#filterData').on('change', function() {
+                const selectedFilter = $(this).val();
+                datatable.ajax.url('{{ route('anggaran-belanja.index') }}?jenis_anggaran=' +
+                        selectedFilter)
                     .load();
             });
 
             $('#reload').on('click', function() {
-                $('#filterBidang').val('');
-                datatable.ajax.url('{{ route('bidang-dua.index') }}').load();
+                $('#filterData').val('');
+                datatable.ajax.url('{{ route('anggaran-belanja.index') }}').load();
             });
 
         });
@@ -234,7 +214,7 @@
                 if (result.isConfirmed) {
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: '/bidang-dua/destroy/' + id,
+                        url: '/anggaran-belanja/destroy/' + id,
                         type: 'DELETE',
                         data: {
                             _token: csrfToken

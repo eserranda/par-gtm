@@ -8,6 +8,20 @@
             <div class="modal-body">
                 <form id="editForm">
                     <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="bidang">Bidang</label>
+                            <select class="form-control " id="edit_bidang" name="edit_bidang">
+                                <option value="" selected disabled>Pilih bidang</option>
+                                <option value="Bidang Pembinaan">Bidang Pembinaan</option>Z
+                                <option value="Bidang Kreatif">Bidang Kreatif</option>Z
+                            </select>
+                            <div class="invalid-feedback">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="nama_kegiatan">Nama Kegiatan</label>
@@ -48,8 +62,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="sasaran_belanja">Sasaran Belanja</label>
-                                <textarea class="form-control" rows="3" name="edit_sasaran_belanja" id="edit_sasaran_belanja"
-                                    placeholder="Sasaran Belanja"></textarea>
+
+                                <textarea class="form-control" rows="3" name="edit_sasaran_belanja" id="edit_sasaran_belanja"></textarea>
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -103,7 +117,7 @@
             var id = document.getElementById('edit_id').value;
 
             try {
-                const response = await fetch('/bidang-satu/update', {
+                const response = await fetch('/bidang-tiga/update', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

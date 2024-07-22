@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="myModalLabel">Edit Data </h5>
+                <h5 class="modal-title mt-0" id="myModalLabel">Tambah Data </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -10,10 +10,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="nama_kegiatan">Nama Kegiatan</label>
+                                <label class="form-label" for="nama_pengurus">Nama Pengurus</label>
                                 <input type="hidden" class="form-control" id="edit_id" name="id">
-                                <input type="text" class="form-control" id="edit_nama_kegiatan"
-                                    name="edit_nama_kegiatan">
+                                <input type="text" class="form-control" id="edit_nama_pengurus"
+                                    name="edit_nama_pengurus">
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -22,9 +22,8 @@
                         <!-- end col -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="waktu_dan_tempat">Waktu Dan Tempat</label>
-                                <input type="text" class="form-control" id="edit_waktu_dan_tempat"
-                                    name="edit_waktu_dan_tempat">
+                                <label class="form-label" for="jabatan">Jabatan</label>
+                                <input type="text" class="form-control" id="edit_jabatan" name="edit_jabatan">
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -35,44 +34,21 @@
                     <!-- end row -->
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <label class="form-label" for="jabatan">Periode</label>
+                        <div class="col-md-3">
                             <div class="mb-3">
-                                <label class="form-label">Tujuan</label>
-                                <textarea class="form-control" rows="3" name="edit_tujuan" id="edit_tujuan"></textarea>
+                                <input type="number" class="form-control" id="edit_tahun_mulai"
+                                    name="edit_tahun_mulai">
                                 <div class="invalid-feedback">
 
                                 </div>
                             </div>
                         </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="sasaran_belanja">Sasaran Belanja</label>
-                                <textarea class="form-control" rows="3" name="edit_sasaran_belanja" id="edit_sasaran_belanja"
-                                    placeholder="Sasaran Belanja"></textarea>
-                                <div class="invalid-feedback">
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="mb-3">
-                                <label class="form-label" for="sumber_biaya">Sumber Biaya</label>
-                                <input type="text" class="form-control" id="edit_sumber_biaya"
-                                    name="edit_sumber_biaya">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="penanggung_jawab">Penanggung Jawab</label>
-                                <input type="text" class="form-control" id="edit_penanggung_jawab"
-                                    name="edit_penanggung_jawab">
+                                <input type="number" class="form-control" id="edit_tahun_selesai"
+                                    name="edit_tahun_selesai">
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -83,7 +59,7 @@
                     <div class="float-end">
                         <button type="button" class="btn btn-light waves-effect mx-2"
                             data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary" type="submit">Update</button>
+                        <button class="btn btn-primary  " type="submit">Simpan</button>
                     </div>
                 </form>
                 <!-- end form -->
@@ -91,7 +67,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 
 @push('scripts')
     <script>
@@ -103,7 +78,7 @@
             var id = document.getElementById('edit_id').value;
 
             try {
-                const response = await fetch('/bidang-satu/update', {
+                const response = await fetch('/pengurus/update', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -146,9 +121,7 @@
                             errorNextSibling.textContent = '';
                         }
                     });
-
-                    $('#datatable').DataTable().ajax.reload();
-                    $('#editModal').modal('hide');
+                    location.reload();
                 }
             } catch (error) {
                 console.error(error);
