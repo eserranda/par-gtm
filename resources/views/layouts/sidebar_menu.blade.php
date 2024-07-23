@@ -104,7 +104,7 @@
                       </ul>
                   </li> --}}
 
-                  <li>
+                  {{-- <li>
                       <a href="javascript: void(0);" class="waves-effect">
                           <span class="badge rounded-pill bg-danger float-end">2</span>
                           <i class="mdi mdi-google-maps"></i>
@@ -114,11 +114,11 @@
                           <li><a href="maps-google.html"> Google Map</a></li>
                           <li><a href="maps-vector.html"> Vector Map</a></li>
                       </ul>
-                  </li>
+                  </li> --}}
 
-                  <li class="menu-title">Extras</li>
+                  {{-- <li class="menu-title">Extras</li> --}}
 
-                  <li>
+                  {{-- <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-responsive"></i>
                           <span> Layouts </span>
@@ -146,9 +146,9 @@
                               </ul>
                           </li>
                       </ul>
-                  </li>
+                  </li> --}}
 
-                  <li>
+                  {{-- <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-account-box"></i>
                           <span> Authentication </span>
@@ -159,9 +159,9 @@
                           <li><a href="pages-recoverpw.html">Recover Password</a></li>
                           <li><a href="pages-lock-screen.html">Lock Screen</a></li>
                       </ul>
-                  </li>
+                  </li> --}}
 
-                  <li>
+                  {{-- <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-text-box-multiple-outline"></i>
                           <span> Extra Pages </span>
@@ -174,11 +174,11 @@
                           <li><a href="pages-404.html">Error 404</a></li>
                           <li><a href="pages-500.html">Error 500</a></li>
                       </ul>
-                  </li>
+                  </li> --}}
 
 
 
-                  <li>
+                  {{-- <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-share-variant"></i>
                           <span>Multi Level</span>
@@ -192,7 +192,7 @@
                               </ul>
                           </li>
                       </ul>
-                  </li>
+                  </li> --}}
 
               </ul>
           </div>
