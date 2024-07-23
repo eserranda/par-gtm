@@ -15,7 +15,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $superAdminRole = Role::firstOrCreate(['name' => 'super_admin']);
+        $superAdminRole = Role::firstOrCreate([
+            'name' => 'super_admin',
+            'description' => 'login untuk mengakses semua fitur',
+        ]);
         // Buat user baru
         $superAdmin = User::create([
             'name' => 'Super Admin',
