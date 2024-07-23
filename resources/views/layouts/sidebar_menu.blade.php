@@ -43,6 +43,21 @@
                       </a>
                   </li>
 
+                  <li class="menu-title">Authications</li>
+                  <li>
+                      <a href="/users" class="waves-effect">
+                          <i class="mdi mdi-account"></i>
+                          <span>Users</span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="/roles" class="waves-effect">
+                          <i class="mdi mdi-account-key"></i>
+                          <span>Role</span>
+                      </a>
+                  </li>
+
                   {{-- <li>
                       <a href="javascript: void(0);" class="waves-effect">
                           <i class="mdi mdi-clipboard-outline"></i>

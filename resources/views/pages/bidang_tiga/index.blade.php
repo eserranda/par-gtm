@@ -15,7 +15,7 @@
 @endpush
 
 @section('page_title')
-    Theologi dan Kurikulum
+    Dana Dan Diakonia
 @endsection
 @section('content')
     <div class="row">

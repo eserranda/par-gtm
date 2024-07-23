@@ -1,7 +1,7 @@
 <div class="main-content">
-
     <div class="page-content">
         <div class="container-fluid">
+
 
             <!-- start page title -->
             <div class="row">
@@ -16,6 +16,20 @@
                         </ol>
                     </div>
                 </div>
+
+
+                <div class="col-sm-6">
+                    <div class="d-flex justify-content-end align-items-end mb-3">
+                        <p class="font-size-15">Selamat Datang, <span class="fw-bold"> {{ Auth::user()->name }}</span>,
+                            anda login sebagai
+                            <br>
+                            @foreach (Auth::user()->roles as $role)
+                                <span class="badge bg-warning">{{ $role->name }}</span>
+                            @endforeach
+                        </p>
+                    </div>
+                </div>
+
             </div>
             <!-- end page title -->
             @yield('content')
