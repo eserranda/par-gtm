@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengurus;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
 class PengurusController extends Controller
@@ -11,11 +12,26 @@ class PengurusController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $data = Pengurus::all();
-        return view('pages.pengurus.index', compact('data'));
+        if ($request->ajax()) {
+            $data = Pengurus::latest('created_at')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('periode', function ($row) {
+                    return $row->tahun_mulai . '-' . $row->tahun_selesai;
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-outline-secondary btn-sm" title="Edit" onclick="edit(' . $row->id . ')"> <i class="fas fa-pencil-alt"></i> </a>';
+                    $btn .= '<a class="btn btn-outline-secondary btn-sm  text-danger mx-2" title="Hapus" onclick="hapus(' . $row->id . ')"> <i class="fas fa-trash-alt"></i> </a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('pages.pengurus.index');
     }
 
 

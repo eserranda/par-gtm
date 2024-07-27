@@ -1,5 +1,15 @@
 @extends('layouts.master')
 @push('header_comp')
+    <!-- DataTables -->
+    <link href="{{ asset('assets') }}/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets') }}/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="{{ asset('assets') }}/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+
     <!-- Sweet Alert-->
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 @endpush
@@ -13,13 +23,16 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-end align-items-end mb-3">
-                        <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
-                            data-bs-target="#addModal">
-                            Tambah Data
-                        </button>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title"><b>Data Pengurus </b></h5>
+                        <div>
+                            <button type="button" class="btn btn-info waves-effect" id="btnPrint">Print</button>
+                            <button type="button" class="btn btn-success waves-effect" id ="btnExcel">Excel</button>
+                            <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
+                                data-bs-target="#addModal">Tambah Data</button>
+                        </div>
                     </div>
-                    <table class="table table-striped table-bordered dt-responsive nowrap"
+                    <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
@@ -27,25 +40,11 @@
                                 <th>Nama Pengurus</th>
                                 <th>Jabatan</th>
                                 <th>Periode</th>
-                                <th></th>
+                                <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $d)
-                                <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $d->nama_pengurus }}</td>
-                                    <td>{{ $d->jabatan }}</td>
-                                    <td>{{ $d->tahun_mulai }} - {{ $d->tahun_selesai }}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" title="Edit"
-                                            onclick="edit('{{ $d->id }}')">Edit</a>
 
-                                        <a class="btn btn-sm btn-danger" title="Hapus"
-                                            onclick="hapus('{{ $d->id }}')">Hapus</a>
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -58,6 +57,23 @@
 @endsection
 
 @push('scripts')
+    <!-- Required datatable js -->
+    <script src="{{ asset('assets') }}/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('assets') }}/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="{{ asset('assets') }}/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('assets') }}/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="{{ asset('assets') }}/libs/jszip/jszip.min.js"></script>
+    <script src="{{ asset('assets') }}/libs/pdfmake/build/pdfmake.min.js"></script>
+    <script src="{{ asset('assets') }}/libs/pdfmake/build/vfs_fonts.js"></script>
+    <script src="{{ asset('assets') }}/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="{{ asset('assets') }}/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="{{ asset('assets') }}/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+    <script src="{{ asset('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+
     <!-- SweetAlert2 -->
     <script src="{{ asset('assets') }}/libs/sweetalert2/sweetalert2.min.js"></script>
 
@@ -80,6 +96,90 @@
             // show modal edit
             $('#editModal').modal('show');
         }
+
+        var datatable;
+        $(document).ready(function() {
+            const selectedFilter = $('#filterData').val();
+            datatable = $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: true,
+                responsive: true,
+
+                dom: "<'row'<'col-lg-3'l> <'col-lg-4'B> <'col-lg-5'f>>" +
+                    "<'row'<'col-sm-12 py-lg-2'tr>>" +
+                    "<'row'<'col-sm-12 col-lg-5'i><'col-sm-12 col-lg-7'p>>",
+                buttons: [{
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        },
+                        init: function(api, node, config) {
+                            $(node).hide();
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        },
+                        init: function(api, node, config) {
+                            $(node).hide();
+                        }
+                    },
+                ],
+                ajax: "{{ route('pengurus.index') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: '#',
+                        orderable: false,
+
+                    },
+                    {
+                        data: 'nama_pengurus',
+                        name: 'nama_pengurus',
+                        orderable: false,
+                    },
+                    {
+                        data: 'jabatan',
+                        name: 'jabatan',
+                        orderable: false,
+                    },
+                    {
+                        data: 'periode',
+                        name: 'periode',
+                        orderable: false,
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+            });
+
+            // $('#filterData').on('change', function() {
+            //     const selectedFilter = $(this).val();
+            //     datatable.ajax.url('{{ route('anggaran-belanja.index') }}?jenis_anggaran=' +
+            //             selectedFilter)
+            //         .load();
+            // });
+
+            // $('#reload').on('click', function() {
+            //     $('#filterData').val('');
+            //     datatable.ajax.url('{{ route('anggaran-belanja.index') }}').load();
+            // });
+
+        });
+
+        $('#btnExcel').on('click', function() {
+            datatable.button('.buttons-excel').trigger();
+        });
+
+        $('#btnPrint').on('click', function() {
+            datatable.button('.buttons-print').trigger();
+        })
 
         async function hapus(id) {
             Swal.fire({
