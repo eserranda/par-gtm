@@ -10,9 +10,8 @@
                   <li class="menu-title">Main</li>
 
                   <li>
-                      <a href="index.html" class="waves-effect">
+                      <a href="/" class="waves-effect">
                           <i class="mdi mdi-view-dashboard"></i>
-                          <span class="badge rounded-pill bg-primary float-end">2</span>
                           <span>Dashboard</span>
                       </a>
                   </li>
@@ -49,7 +48,7 @@
                   <li>
                       <a href="/pengurus" class="waves-effect">
                           <i class="mdi mdi-account-group"></i>
-                          <span>Pengurus</span>
+                          <span>Pengurus Sinode</span>
                       </a>
                   </li>
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\BidangDuaController;
 use App\Http\Controllers\BidangSatuController;
 use App\Http\Controllers\BidangTigaController;
 use App\Http\Controllers\AnggaranBelanjaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProgramKerjaKlasisController;
 
 /*
@@ -30,10 +31,11 @@ Route::post('login', [UserController::class, 'login'])->middleware('guest');
 
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
+Route::get('/', [DashboardController::class, 'index']);
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+Route::prefix('dashboard')->controller(DashboardController::class)->group(function () {
+    Route::get('/', 'index')->name('dashboard.index')->middleware('auth');
+});
 
 Route::prefix('program-kerja-klasis')->controller(ProgramKerjaKlasisController::class)->group(function () {
     Route::get('/', 'index')->name('program-kerja-klasis.index')->middleware('auth');
