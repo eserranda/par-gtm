@@ -20,13 +20,30 @@
                   <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-briefcase-clock"></i>
-                          <span>Program Kerja</span>
+                          <span>Program Kerja Sinode</span>
                       </a>
                       <ul class="sub-menu" aria-expanded="false">
                           <li><a href="bidang-satu">Bidang I</a></li>
                           <li><a href="bidang-dua">Bidang II</a></li>
                           <li><a href="bidang-tiga">Bidang III</a></li>
                       </ul>
+                  </li>
+
+                  <li>
+                      <a href="javascript: void(0);" class="has-arrow waves-effect">
+                          <i class="mdi mdi-briefcase-clock"></i>
+                          <span>Data Adminstrasi</span>
+                      </a>
+                      <ul class="sub-menu" aria-expanded="false">
+                          <li><a href="klasis">Data Klasis</a></li>
+                      </ul>
+                  </li>
+
+                  <li>
+                      <a href="/pengurus" class="waves-effect">
+                          <i class="mdi mdi-briefcase-clock"></i>
+                          <span>Program Kerja Klasis</span>
+                      </a>
                   </li>
 
                   <li>

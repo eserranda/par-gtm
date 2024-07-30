@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="bidang">Bidang</label>
-                            <select class="form-control " id="bidang" name="bidang">
+                            <select class="form-select" id="bidang" name="bidang">
                                 <option value="" selected disabled>Pilih bidang</option>
                                 <option value="Bidang Pembinaan">Bidang Pembinaan</option>Z
                                 <option value="Bidang Kreatif">Bidang Kreatif</option>Z

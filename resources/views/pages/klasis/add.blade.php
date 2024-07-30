@@ -3,68 +3,73 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title mt-0" id="myModalLabel">Tambah Data </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" onclick="closeModalAdd()"> </button>
             </div>
             <div class="modal-body">
                 <form id="addForm">
                     <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label" for="bidang">Jenis Anggaran</label>
-                            <select class="form-select" id="jenis_anggaran" name="jenis_anggaran">
-                                <option value="" selected disabled>Pilih Jenis Anggaran</option>
-                                <option value="Pendapatan Rutin">Pendapatan Rutin</option>
-                                <option value="Pendapatan Program">Pendapatan Program</option>
-                                <option value="Pendapatan Lain-lain">Pendapatan Lain-lain</option>
-                                <option value="Belanja Rutin">Belanja Rutin</option>
-                                <option value="Biaya Program">Biaya Program</option>
-                                <option value="Belanja lain-lain">Belanja lain-lain</option>
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label">Nama Klasis
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="nama_klasis" name="nama_klasis"
+                                placeholder="Nama Klasis">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group col-md-6 mb-3">
+                            <label class="col-form-label">Wilayah </label>
+                            <select class="form-control form-select" name="wilayah" id="wilayah">
+                                <option value="" selected disabled>Pilih Wilayah</option>
+                                <option value="Wilayah I">Wilayah I</option>
+                                <option value="Wilayah II">Wilayah II</option>
+                                <option value="Wilayah III">Wilayah III</option>
+                                <option value="Wilayah IV">Wilayah IV</option>
+                                <option value="Wilayah V">Wilayah V</option>
+                                <option value="Wilayah VI">Wilayah VI</option>
+                                <option value="Wilayah VII">Wilayah VII</option>
+                                <option value="Wilayah VIII">Wilayah VIII</option>
+                                <option value="Wilayah IX">Wilayah IX</option>
+                                <option value="Wilayah X">Wilayah X</option>
+                                <option value="Wilayah XI">Wilayah XI</option>
+                                <option value="Wilayah XII">Wilayah XII</option>
                             </select>
-                            <div class="invalid-feedback">
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="sumber_anggaran">Sumber Anggaran</label>
-                                <input type="text" class="form-control" id="sumber_anggaran" name="sumber_anggaran"
-                                    placeholder="Sumber Anggaran">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Nominal Anggaran</label>
-                                <input type="number" class="form-control" id="nominal_anggaran" name="nominal_anggaran"
-                                    placeholder="Nominal Anggaran">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- end row -->
                     <div class="float-end">
-                        <button type="button" class="btn btn-light waves-effect mx-2"
-                            data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-light waves-effect mr-2"
+                            onclick="closeModalAdd()">Batal</button>
                         <button class="btn btn-primary  " type="submit">Simpan</button>
                     </div>
                 </form>
-
+                <!-- end form -->
             </div>
-        </div>
-    </div>
-</div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 @push('scripts')
     <script>
+        function closeModalAdd() {
+            const invalidInputs = document.querySelectorAll('.is-invalid');
+            invalidInputs.forEach(invalidInput => {
+                invalidInput.value = '';
+                invalidInput.classList.remove('is-invalid');
+                const errorNextSibling = invalidInput.nextElementSibling;
+                if (errorNextSibling && errorNextSibling.classList.contains(
+                        'invalid-feedback')) {
+                    errorNextSibling.textContent = '';
+                }
+            });
+
+            const form = document.getElementById('addForm');
+            form.reset();
+            $('#addModal').modal('hide');
+        }
+
         document.getElementById('addForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -73,7 +78,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/anggaran-belanja/store', {
+                const response = await fetch('/klasis/store', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -123,7 +128,6 @@
                     $('#datatable').DataTable().ajax.reload();
                     $('#addModal').modal('hide');
                 }
-
 
             } catch (error) {
                 console.error(error);

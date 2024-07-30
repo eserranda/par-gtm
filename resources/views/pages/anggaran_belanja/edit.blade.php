@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="edit_jenis_anggaran">Jenis Anggaran</label>
-                            <select class="form-control " id="edit_jenis_anggaran" name="edit_jenis_anggaran">
+                            <select class="form-select" id="edit_jenis_anggaran" name="edit_jenis_anggaran">
                                 <option value="" selected disabled>Pilih Jenis Anggaran</option>
                                 <option value="Pendapatan Rutin">Pendapatan Rutin</option>
                                 <option value="Pendapatan Program">Pendapatan Program</option>

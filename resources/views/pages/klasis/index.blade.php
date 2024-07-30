@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @push('header_comp')
     <!-- DataTables -->
     <link href="{{ asset('assets') }}/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
@@ -16,7 +15,7 @@
 @endpush
 
 @section('page_title')
-    Pembinaan dan Kreatif
+    Data Klasis
 @endsection
 @section('content')
     <div class="row">
@@ -26,12 +25,22 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="d-flex align-items-center ">
                             <label class="col-form-label col-md-3">Filter :</label>
-                            <select class="form-select me-2 col-md-1" id="filterBidang">
-                                <option value="" selected disabled>Pilih bidang</option>
-                                <option value="Bidang Pembinaan">Bidang Pembinaan</option>
-                                <option value="Bidang Kreatif">Bidang Kreatif</option>
+                            <select class="form-control form-select col-md-10" id="filterData">
+                                <option value="" selected disabled>Pilih Wilayah</option>
+                                <option value="Wilayah I">Wilayah I</option>
+                                <option value="Wilayah II">Wilayah II</option>
+                                <option value="Wilayah III">Wilayah III</option>
+                                <option value="Wilayah IV">Wilayah IV</option>
+                                <option value="Wilayah V">Wilayah V</option>
+                                <option value="Wilayah VI">Wilayah VI</option>
+                                <option value="Wilayah VII">Wilayah VII</option>
+                                <option value="Wilayah VIII">Wilayah VIII</option>
+                                <option value="Wilayah IX">Wilayah IX</option>
+                                <option value="Wilayah X">Wilayah X</option>
+                                <option value="Wilayah XI">Wilayah XI</option>
+                                <option value="Wilayah XII">Wilayah XII</option>
                             </select>
-                            <button type="button" class="btn btn-light waves-effect col-2" id="reload">
+                            <button type="button" class="btn btn-light waves-effect mx-2 col-3" id="reload">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20"
                                     viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">`
@@ -48,19 +57,14 @@
                                 data-bs-target="#addModal">Tambah Data</button>
                         </div>
                     </div>
-
                     <div class="table-responsive">
                         <table id="datatable" class="table table-striped table-bordered dt-responsive"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Kegiatan</th>
-                                    <th>Waktu</th>
-                                    <th>Tujuan</th>
-                                    <th>Sasaran Belanja</th>
-                                    <th>Sumber Biaya</th>
-                                    <th>Penanggung Jawab</th>
+                                    <th>Klasis</th>
+                                    <th>Wilayah</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -75,9 +79,10 @@
         </div>
     </div>
 
-    @include('pages.bidang_dua.add')
-    @include('pages.bidang_dua.edit')
+    @include('pages.klasis.add')
+    @include('pages.klasis.edit')
 @endsection
+
 
 @push('scripts')
     <!-- Required datatable js -->
@@ -103,28 +108,25 @@
     <!-- Sweet alert init js-->
     <script src="{{ asset('assets') }}/js/pages/sweet-alerts.init.js"></script>
 
+
     <script>
         function edit(id) {
-            fetch('/bidang-dua/findById/' + id)
+            fetch('/klasis/findById/' + id)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_bidang').value = data.bidang
-                    document.getElementById('edit_nama_kegiatan').value = data.nama_kegiatan;
-                    document.getElementById('edit_waktu_dan_tempat').value = data.waktu_dan_tempat;
-                    document.getElementById('edit_tujuan').value = data.tujuan;
-                    document.getElementById('edit_sasaran_belanja').value = data.sasaran_belanja;
-                    document.getElementById('edit_sumber_biaya').value = data.sumber_biaya;
-                    document.getElementById('edit_penanggung_jawab').value = data.penanggung_jawab;
+                    document.getElementById('edit_nama_klasis').value = data.nama_klasis;
+                    document.getElementById('edit_wilayah').value = data.wilayah;
+                    document.getElementById('edit_alamat').value = data.alamat;
                 })
                 .catch(error => console.error(error));
             // show modal edit
             $('#editModal').modal('show');
         }
 
+
         var datatable;
         $(document).ready(function() {
-            const selectedBidang = $('#filterBidang').val();
             datatable = $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -137,7 +139,7 @@
                 buttons: [{
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6]
+                            columns: [0, 1, 2]
                         },
                         init: function(api, node, config) {
                             $(node).hide();
@@ -146,14 +148,14 @@
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6]
+                            columns: [0, 1, 2]
                         },
                         init: function(api, node, config) {
                             $(node).hide();
                         }
                     },
                 ],
-                ajax: "{{ route('bidang-dua.index') }}",
+                ajax: "{{ route('klasis.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: '#',
@@ -161,35 +163,20 @@
 
                     },
                     {
-                        data: 'nama_kegiatan',
-                        name: 'nama_kegiatan',
+                        data: 'nama_klasis',
+                        name: 'nama_klasis',
                         orderable: false,
                     },
                     {
-                        data: 'waktu_dan_tempat',
-                        name: 'waktu_dan_tempat',
+                        data: 'wilayah',
+                        name: 'wilayah',
                         orderable: false,
                     },
-                    {
-                        data: 'tujuan',
-                        name: 'tujuan',
-                        orderable: false,
-                    },
-                    {
-                        data: 'sasaran_belanja',
-                        name: 'sasaran_belanja',
-                        orderable: false,
-                    },
-                    {
-                        data: 'sumber_biaya',
-                        name: 'sumber_biaya',
-                        orderable: false,
-                    },
-                    {
-                        data: 'penanggung_jawab',
-                        name: 'penanggung_jawab',
-                        orderable: false,
-                    },
+                    // {
+                    //     data: 'alamat',
+                    //     name: 'alamat',
+                    //     orderable: false,
+                    // },
                     {
                         data: 'action',
                         name: 'action',
@@ -199,17 +186,16 @@
                 ],
             });
 
-            $('#filterBidang').on('change', function() {
-                const selectedBidang = $(this).val();
-                datatable.ajax.url('{{ route('bidang-dua.index') }}?bidang=' + selectedBidang)
+            $('#filterData').on('change', function() {
+                const selectedFilter = $(this).val();
+                datatable.ajax.url('{{ route('klasis.index') }}?filter=' + selectedFilter)
                     .load();
             });
 
             $('#reload').on('click', function() {
-                $('#filterBidang').val('');
-                datatable.ajax.url('{{ route('bidang-dua.index') }}').load();
+                $('#filterData').val('');
+                datatable.ajax.url('{{ route('klasis.index') }}').load();
             });
-
         });
 
         $('#btnExcel').on('click', function() {
@@ -234,7 +220,7 @@
                 if (result.isConfirmed) {
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: '/bidang-dua/destroy/' + id,
+                        url: '/klasis/destroy/' + id,
                         type: 'DELETE',
                         data: {
                             _token: csrfToken

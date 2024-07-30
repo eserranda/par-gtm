@@ -9,8 +9,8 @@
                 <form id="editForm">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label class="form-label" for="bidang">Bidang</label>
-                            <select class="form-control " id="edit_bidang" name="edit_bidang">
+                            <label class="form-label" for="edit_bidang">Bidang</label>
+                            <select class="form-select" id="edit_bidang" name="edit_bidang">
                                 <option value="" selected disabled>Pilih bidang</option>
                                 <option value="Bidang Pembinaan">Bidang Pembinaan</option>Z
                                 <option value="Bidang Kreatif">Bidang Kreatif</option>Z

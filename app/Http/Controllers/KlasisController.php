@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BidangSatu;
+use App\Models\Klasis;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class BidangSatuController extends Controller
+class KlasisController extends Controller
 {
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = BidangSatu::latest('created_at')->get();
+            $bidangFilter = $request->input('filter');
+
+            $query = Klasis::query();
+            if ($bidangFilter) {
+                $query->where('wilayah', $bidangFilter);
+            }
+
+            $data = $query->latest('created_at')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -26,18 +34,44 @@ class BidangSatuController extends Controller
                 ->make(true);
         }
 
-        return view('pages.bidang_satu.index');
+        return view('pages.klasis.index');
+    }
+
+    public function findOne($id)
+    {
+        $data = Klasis::find($id);
+        return response()->json($data);
+    }
+
+    public function getAllKlasis(Request $request)
+    {
+        $search = $request->input('term'); // Dapatkan parameter pencarian dari Select2
+
+        // Ambil data dari database berdasarkan parameter pencarian
+        $klasis = Klasis::where('nama_klasis', 'LIKE', '%' . $search . '%')
+            ->select('id', 'nama_klasis as text')
+            ->get();
+
+        return response()->json($klasis);
+    }
+
+    public function findById($id)
+    {
+        $data = Klasis::find($id);
+        return response()->json($data);
+    }
+
+    public function getIdAndNameAllKlasis()
+    {
+        $klases = Klasis::orderBy('nama_klasis', 'asc')->get(['id', 'nama_klasis']);
+        return response()->json($klases);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_kegiatan' => 'required',
-            'waktu_dan_tempat' => 'required',
-            'tujuan' => 'required',
-            'sasaran_belanja' => 'required',
-            'sumber_biaya' => 'required',
-            'penanggung_jawab' => 'required',
+            'wilayah' => 'required',
+            'nama_klasis' => 'required',
         ], [
             'required' => ':attribute harus diisi',
         ]);
@@ -49,44 +83,31 @@ class BidangSatuController extends Controller
             ], 422);
         }
 
-        $save = BidangSatu::create([
-            'nama_kegiatan' => $request->nama_kegiatan,
-            'waktu_dan_tempat' => $request->waktu_dan_tempat,
-            'tujuan' => $request->tujuan,
-            'sasaran_belanja' => $request->sasaran_belanja,
-            'sumber_biaya' => $request->sumber_biaya,
-            'penanggung_jawab' => $request->penanggung_jawab,
+
+        $klasis = Klasis::create([
+            'wilayah' => $request->wilayah,
+            'nama_klasis' => $request->nama_klasis,
         ]);
 
-        if ($save) {
+        if ($klasis) {
             return response()->json([
                 'success' => true,
-                'messages' => 'Data Berhasilimpan'
+                'messages' => 'Data klasis berhasil ditambahkan',
             ], 201);
         } else {
             return response()->json([
                 'success' => false,
-                'messages' => 'Data Gagal Disimpan'
+                'messages' => 'Data klasis gagal ditambahkan',
             ], 500);
         }
     }
-    public function findById($id)
-    {
-        $data = BidangSatu::find($id);
-        return response()->json($data);
-    }
 
 
-    public function update(Request $request, BidangSatu $bidangSatu)
+    public function update(Request $request, Klasis $klasis)
     {
-        $id = $request->input('id');
         $validator = Validator::make($request->all(), [
-            'edit_nama_kegiatan' => 'required',
-            'edit_waktu_dan_tempat' => 'required',
-            'edit_tujuan' => 'required',
-            'edit_sasaran_belanja' => 'required',
-            'edit_sumber_biaya' => 'required',
-            'edit_penanggung_jawab' => 'required',
+            'edit_wilayah' => 'required',
+            'edit_nama_klasis' => 'required',
         ], [
             'required' => ':attribute harus diisi',
         ]);
@@ -98,36 +119,30 @@ class BidangSatuController extends Controller
             ], 422);
         }
 
-        $update = BidangSatu::where('id', $id)->update([
-            'nama_kegiatan' => $request->input('edit_nama_kegiatan'),
-            'waktu_dan_tempat' => $request->input('edit_waktu_dan_tempat'),
-            'tujuan' => $request->input('edit_tujuan'),
-            'sasaran_belanja' => $request->input('edit_sasaran_belanja'),
-            'sumber_biaya' => $request->input('edit_sumber_biaya'),
-            'penanggung_jawab' => $request->input('edit_penanggung_jawab'),
+        $update = $klasis::where('id', $request->input('id'))->update([
+            'wilayah' => $request->input('edit_wilayah'),
+            'nama_klasis' => $request->input('edit_nama_klasis'),
         ]);
 
         if ($update) {
             return response()->json([
-                'success' => true,
-                'messages' => 'Data Berhasilimpan'
-            ], 201);
+                'success' => true
+            ]);
         } else {
             return response()->json([
-                'success' => false,
-                'messages' => 'Data Gagal Disimpan'
-            ], 500);
+                'success' => false
+            ]);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BidangSatu $bidangSatu, $id)
+    public function destroy(Klasis $klasis, $id)
     {
         try {
-            $del_siswa = $bidangSatu::findOrFail($id);
-            $del_siswa->delete();
+            $deleted = $klasis::findOrFail($id);
+            $deleted->delete();
 
             return response()->json(['status' => true, 'message' => 'Data berhasil dihapus'], 200);
         } catch (\Exception $e) {
