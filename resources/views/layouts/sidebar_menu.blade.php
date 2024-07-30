@@ -40,7 +40,7 @@
                   </li>
 
                   <li>
-                      <a href="/pengurus" class="waves-effect">
+                      <a href="/program-kerja-klasis" class="waves-effect">
                           <i class="mdi mdi-briefcase-clock"></i>
                           <span>Program Kerja Klasis</span>
                       </a>

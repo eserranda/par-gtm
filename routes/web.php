@@ -9,6 +9,7 @@ use App\Http\Controllers\BidangDuaController;
 use App\Http\Controllers\BidangSatuController;
 use App\Http\Controllers\BidangTigaController;
 use App\Http\Controllers\AnggaranBelanjaController;
+use App\Http\Controllers\ProgramKerjaKlasisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,15 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
 
+Route::prefix('program-kerja-klasis')->controller(ProgramKerjaKlasisController::class)->group(function () {
+    Route::get('/', 'index')->name('program-kerja-klasis.index')->middleware('auth');
+    Route::get('/create', 'create');
+    Route::get('/findById/{id}', 'findById');
+    Route::post('/store', 'store');
+    Route::post('/update', 'update');
+    Route::delete('/destroy/{id}', 'destroy');
+});
+
 Route::prefix('klasis')->controller(KlasisController::class)->group(function () {
     Route::get('/', 'index')->name('klasis.index')->middleware('auth');
     Route::get('/create', 'create');
@@ -41,9 +51,9 @@ Route::prefix('klasis')->controller(KlasisController::class)->group(function () 
     Route::post('/store', 'store');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
-    // Route::get('/getAllKlasis', 'getAllKlasis');
+    Route::get('/getAllKlasis', 'getAllKlasis');
     // Route::get('/getIdAndNameAllKlasis', 'getIdAndNameAllKlasis');
-    // Route::get('/findOne/{id}', 'findOne');
+    Route::get('/findOne/{id}', 'findOne');
 });
 
 Route::prefix('roles')->controller(RoleController::class)->group(function () {

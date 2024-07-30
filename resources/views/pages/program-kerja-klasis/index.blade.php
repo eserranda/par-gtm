@@ -12,10 +12,17 @@
 
     <!-- Sweet Alert-->
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Select2 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 @endpush
 
 @section('page_title')
-    Dana Dan Diakonia
+    Program Kerja Klasis
 @endsection
 @section('content')
     <div class="row">
@@ -25,10 +32,11 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="d-flex align-items-center ">
                             <label class="col-form-label col-md-3">Filter :</label>
-                            <select class="form-select me-2 col-md-1" id="filterBidang">
+                            <select class="form-select me-2 col-md-1" id="filterData">
                                 <option value="" selected disabled>Pilih bidang</option>
-                                <option value="Bidang Dana">Bidang Dana</option>
-                                <option value="Bidang Diakonia">Bidang Diakonia</option>
+                                <option value="Teologia Dan Kurikulum">Teologia Dan Kurikulum</option>Z
+                                <option value="Pemberdayaan dan Pelatihan">Pemberdayaan dan Pelatihan</option>Z
+                                <option value="Diokonia dan Dana">Diokonia dan Dana</option>
                             </select>
                             <button type="button" class="btn btn-light waves-effect col-2" id="reload">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20"
@@ -53,12 +61,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Kegiatan</th>
-                                    <th>Waktu</th>
+                                    <th>Klasis</th>
+                                    <th>Bidang</th>
                                     <th>Tujuan</th>
-                                    <th>Sasaran Belanja</th>
-                                    <th>Sumber Biaya</th>
-                                    <th>Penanggung Jawab</th>
+                                    <th>Waktu</th>
+                                    <th>Tempat</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -73,8 +80,8 @@
         </div>
     </div>
 
-    @include('pages.bidang_tiga.add')
-    @include('pages.bidang_tiga.edit')
+    @include('pages.program-kerja-klasis.add')
+    @include('pages.program-kerja-klasis.edit')
 @endsection
 
 
@@ -95,36 +102,66 @@
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
-    <!-- SweetAlert2 -->
     <!-- Sweet Alerts js -->
     <script src="{{ asset('assets') }}/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <!-- Sweet alert init js-->
     <script src="{{ asset('assets') }}/js/pages/sweet-alerts.init.js"></script>
 
+    <!-- Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
     <script>
         function edit(id) {
-            fetch('/bidang-tiga/findById/' + id)
+            fetch('/program-kerja-klasis/findById/' + id)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('edit_id').value = data.id;
+                    document.getElementById('edit_id_klasis').value = data.id_klasis;
                     document.getElementById('edit_bidang').value = data.bidang
-                    document.getElementById('edit_nama_kegiatan').value = data.nama_kegiatan;
-                    document.getElementById('edit_waktu_dan_tempat').value = data.waktu_dan_tempat;
                     document.getElementById('edit_tujuan').value = data.tujuan;
-                    document.getElementById('edit_sasaran_belanja').value = data.sasaran_belanja;
-                    document.getElementById('edit_sumber_biaya').value = data.sumber_biaya;
-                    document.getElementById('edit_penanggung_jawab').value = data.penanggung_jawab;
+                    document.getElementById('edit_waktu').value = data.waktu;
+                    document.getElementById('edit_tempat').value = data.tempat;
+                    var editIdKlasisSelect = document.getElementById('edit_id_klasis');
+
+                    fetch('/klasis/findOne/' + data.id_klasis, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Gagal mengambil data');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            updateOptionsAndSelect2Klasis(editIdKlasisSelect, data.id, data.nama_klasis);
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
                 })
                 .catch(error => console.error(error));
             // show modal edit
             $('#editModal').modal('show');
         }
 
+        function updateOptionsAndSelect2Klasis(selectElement, id, name) {
+            // Hapus semua opsi yang ada di elemen <select>
+            $(selectElement).empty();
+
+            // Tambahkan opsi baru ke elemen <select>
+            var option = new Option(name, id, true, true);
+            $(selectElement).append(option);
+
+            // Perbarui tampilan Select2
+            $(selectElement).trigger('change');
+        }
+
         var datatable;
         $(document).ready(function() {
-            const selectedKBidang = $('#filterBidang').val();
+            const selectedKBidang = $('#filterData').val();
             datatable = $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -137,7 +174,7 @@
                 buttons: [{
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6]
+                            columns: [0, 1, 2, 3, 4, 5]
                         },
                         init: function(api, node, config) {
                             $(node).hide();
@@ -146,14 +183,14 @@
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6]
+                            columns: [0, 1, 2, 3, 4, 5]
                         },
                         init: function(api, node, config) {
                             $(node).hide();
                         }
                     },
                 ],
-                ajax: "{{ route('bidang-tiga.index') }}",
+                ajax: "{{ route('program-kerja-klasis.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: '#',
@@ -161,13 +198,13 @@
 
                     },
                     {
-                        data: 'nama_kegiatan',
-                        name: 'nama_kegiatan',
+                        data: 'id_klasis',
+                        name: 'id_klasis',
                         orderable: false,
                     },
                     {
-                        data: 'waktu_dan_tempat',
-                        name: 'waktu_dan_tempat',
+                        data: 'bidang',
+                        name: 'bidang',
                         orderable: false,
                     },
                     {
@@ -176,18 +213,13 @@
                         orderable: false,
                     },
                     {
-                        data: 'sasaran_belanja',
-                        name: 'sasaran_belanja',
+                        data: 'waktu',
+                        name: 'waktu',
                         orderable: false,
                     },
                     {
-                        data: 'sumber_biaya',
-                        name: 'sumber_biaya',
-                        orderable: false,
-                    },
-                    {
-                        data: 'penanggung_jawab',
-                        name: 'penanggung_jawab',
+                        data: 'tempat',
+                        name: 'tempat',
                         orderable: false,
                     },
                     {
@@ -199,15 +231,15 @@
                 ],
             });
 
-            $('#filterBidang').on('change', function() {
-                const selectedBidang = $(this).val();
-                datatable.ajax.url('{{ route('bidang-tiga.index') }}?bidang=' + selectedBidang)
+            $('#filterData').on('change', function() {
+                const selectedData = $(this).val();
+                datatable.ajax.url('{{ route('program-kerja-klasis.index') }}?filter=' + selectedData)
                     .load();
             });
 
             $('#reload').on('click', function() {
-                $('#filterBidang').val('');
-                datatable.ajax.url('{{ route('bidang-tiga.index') }}').load();
+                $('#filterData').val('');
+                datatable.ajax.url('{{ route('program-kerja-klasis.index') }}').load();
             });
 
         });
@@ -234,7 +266,7 @@
                 if (result.isConfirmed) {
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: '/bidang-tiga/destroy/' + id,
+                        url: '/program-kerja-klasis/destroy/' + id,
                         type: 'DELETE',
                         data: {
                             _token: csrfToken
