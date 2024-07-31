@@ -28,6 +28,8 @@
                       </ul>
                   </li>
 
+                  <li class="menu-title">Klasis</li>
+
                   <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-briefcase-clock"></i>
@@ -45,6 +47,8 @@
                       </a>
                   </li>
 
+                  <li class="menu-title">Jemaat</li>
+
                   <li>
                       <a href="/pengurus" class="waves-effect">
                           <i class="mdi mdi-account-group"></i>
@@ -55,7 +59,14 @@
                   <li>
                       <a href="/anggaran-belanja" class="waves-effect">
                           <i class="mdi mdi-cash-multiple"></i>
-                          <span>Anggran Belanja</span>
+                          <span>Anggaran Belanja</span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="/jemaat" class="waves-effect">
+                          <i class="mdi mdi-cash-multiple"></i>
+                          <span>Data Jemaat</span>
                       </a>
                   </li>
 

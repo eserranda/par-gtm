@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Jemaat;
 use App\Models\Klasis;
 use App\Models\Pengurus;
 use App\Models\Dashboard;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,8 +19,9 @@ class DashboardController extends Controller
     {
         $klasis = Klasis::count();
         $pengurus = Pengurus::count();
+        $jemaat = Jemaat::count();
         $user = User::count();
-        return view('pages.dashboard.index',  compact('klasis', 'pengurus', 'user'));
+        return view('pages.dashboard.index',  compact('klasis', 'pengurus', 'jemaat', 'user'));
     }
 
     /**
