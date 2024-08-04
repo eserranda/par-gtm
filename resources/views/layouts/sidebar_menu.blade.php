@@ -16,6 +16,8 @@
                       </a>
                   </li>
 
+                  <li class="menu-title">Sinode</li>
+
                   <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-briefcase-clock"></i>
@@ -28,8 +30,6 @@
                       </ul>
                   </li>
 
-                  <li class="menu-title">Klasis</li>
-
                   <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-briefcase-clock"></i>
@@ -37,17 +37,9 @@
                       </a>
                       <ul class="sub-menu" aria-expanded="false">
                           <li><a href="klasis">Data Klasis</a></li>
+                          <li><a href="/jemaat">Data Jemaat</a></li>
                       </ul>
                   </li>
-
-                  <li>
-                      <a href="/program-kerja-klasis" class="waves-effect">
-                          <i class="mdi mdi-briefcase-clock"></i>
-                          <span>Program Kerja Klasis</span>
-                      </a>
-                  </li>
-
-                  <li class="menu-title">Jemaat</li>
 
                   <li>
                       <a href="/pengurus" class="waves-effect">
@@ -63,12 +55,32 @@
                       </a>
                   </li>
 
+                  <li class="menu-title">Klasis</li>
+
                   <li>
+                      <a href="/program-kerja-klasis" class="waves-effect">
+                          <i class="mdi mdi-briefcase-clock"></i>
+                          <span>Program Kerja Klasis</span>
+                      </a>
+                  </li>
+
+                  <li class="menu-title">Jemaat/PAR</li>
+
+                  <li>
+                      <a href="/pengurus-jemaat" class="waves-effect">
+                          <i class="mdi mdi-cash-multiple"></i>
+                          <span>Pengurus Par Jemaat</span>
+                      </a>
+                  </li>
+
+
+
+                  {{-- <li>
                       <a href="/jemaat" class="waves-effect">
                           <i class="mdi mdi-cash-multiple"></i>
                           <span>Data Jemaat</span>
                       </a>
-                  </li>
+                  </li> --}}
 
                   <li class="menu-title">Authications</li>
                   <li>

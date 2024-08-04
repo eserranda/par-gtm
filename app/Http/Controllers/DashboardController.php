@@ -8,6 +8,9 @@ use App\Models\Klasis;
 use App\Models\Pengurus;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
+use App\Models\PengurusJemaat;
+use App\Models\AnggaranBelanja;
+use App\Models\ProgramKerjaKlasis;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -21,7 +24,10 @@ class DashboardController extends Controller
         $pengurus = Pengurus::count();
         $jemaat = Jemaat::count();
         $user = User::count();
-        return view('pages.dashboard.index',  compact('klasis', 'pengurus', 'jemaat', 'user'));
+        $pengurus_jemaat = PengurusJemaat::count();
+        $anggran_sinode = AnggaranBelanja::count();
+        $program_klasis = ProgramKerjaKlasis::count();
+        return view('pages.dashboard.index',  compact('klasis', 'pengurus', 'jemaat', 'pengurus_jemaat', 'anggran_sinode', 'program_klasis', 'user'));
     }
 
     /**

@@ -10,6 +10,7 @@ use App\Http\Controllers\BidangDuaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BidangSatuController;
 use App\Http\Controllers\BidangTigaController;
+use App\Http\Controllers\PengurusJemaatController;
 use App\Http\Controllers\AnggaranBelanjaController;
 use App\Http\Controllers\ProgramKerjaKlasisController;
 
@@ -96,6 +97,14 @@ Route::prefix('anggaran-belanja')->controller(AnggaranBelanjaController::class)-
 })->middleware('auth');
 
 // Route::get('/admin', [AdminController::class, 'index'])->middleware('role:admin,editor');
+
+Route::prefix('pengurus-jemaat')->controller(PengurusJemaatController::class)->group(function () {
+    Route::get('/', 'index')->name('pengurus-jemaat.index')->middleware('role:super_admin,admin');
+    Route::post('/store', 'store');
+    Route::get('/findById/{id}', 'findById');
+    Route::post('/update', 'update');
+    Route::delete('/destroy/{id}', 'destroy');
+})->middleware('auth');
 
 Route::prefix('pengurus')->controller(PengurusController::class)->group(function () {
     Route::get('/', 'index')->name('pengurus.index')->middleware('role:super_admin,admin');

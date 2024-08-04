@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @push('header_comp')
     <!-- DataTables -->
     <link href="{{ asset('assets') }}/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
@@ -13,68 +12,55 @@
 
     <!-- Sweet Alert-->
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Select2 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 @endpush
 
 @section('page_title')
-    Anggaran Belanja Sinode
+    Data Pengurus
 @endsection
+
 @section('content')
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="d-flex align-items-center ">
-                            <label class="col-form-label col-md-3">Filter :</label>
-                            <select class="form-select me-2 col-md-1" id="filterData">
-                                <option value="" selected disabled>Pilih Jenis Anggaran</option>
-                                <option value="Pendapatan Rutin">Pendapatan</option>
-                                <option value="Belanja Rutin">Belanja</option>
-                                <option value="Biaya Program">Biaya</option>
-                            </select>
-                            <button type="button" class="btn btn-light waves-effect col-2" id="reload">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20"
-                                    viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">`
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
-                                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="d-flex gap-2">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title"><b>Data Pengurus Par Jemaat</b></h5>
+                        <div>
                             <button type="button" class="btn btn-info waves-effect" id="btnPrint">Print</button>
-                            <button type="button" class="btn btn-success waves-effect" id="btnExcel">Excel</button>
+                            <button type="button" class="btn btn-success waves-effect" id ="btnExcel">Excel</button>
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                                 data-bs-target="#addModal">Tambah Data</button>
                         </div>
                     </div>
+                    <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Pengurus</th>
+                                <th>Bidang</th>
+                                <th>Jabatan</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    <div class="table-responsive">
-                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
-                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Jenis Anggran</th>
-                                    <th>Sumber Anggaran</th>
-                                    <th>Nominal </th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    @include('pages.anggaran_belanja.add')
-    @include('pages.anggaran_belanja.edit')
+    @include('pages.pengurus-jemaat.add')
+    @include('pages.pengurus-jemaat.edit')
 @endsection
 
 @push('scripts')
@@ -94,26 +80,61 @@
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
+
     <!-- SweetAlert2 -->
-    <!-- Sweet Alerts js -->
     <script src="{{ asset('assets') }}/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <!-- Sweet alert init js-->
     <script src="{{ asset('assets') }}/js/pages/sweet-alerts.init.js"></script>
 
+    <!-- Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <script>
-        function edit(id) {
-            fetch('/anggaran-belanja/findById/' + id)
+        async function edit(id) {
+            fetch('/pengurus-jemaat/findById/' + id)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_jenis_anggaran').value = data.jenis_anggaran;
-                    document.getElementById('edit_sumber_anggaran').value = data.sumber_anggaran;
-                    document.getElementById('edit_nominal_anggaran').value = data.nominal_anggaran;
+                    document.getElementById('edit_id_jemaat').value = data.id_jemaat;
+                    document.getElementById('edit_nama').value = data.nama;
+                    document.getElementById('edit_bidang').value = data.bidang;
+                    document.getElementById('edit_jabatan').value = data.jabatan;
+
+                    var editIdJemaat = document.getElementById('edit_id_jemaat');
+
+                    fetch('/jemaat/findOne/' + data.id_jemaat, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Gagal mengambil data');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            updateOptionsAndSelect2Klasis(editIdJemaat, data.id, data.nama_jemaat);
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
                 })
                 .catch(error => console.error(error));
             // show modal edit
             $('#editModal').modal('show');
+        }
+
+        function updateOptionsAndSelect2Klasis(selectElement, id, name) {
+            // Hapus semua opsi yang ada di elemen <select>
+            $(selectElement).empty();
+
+            // Tambahkan opsi baru ke elemen <select>
+            var option = new Option(name, id, true, true);
+            $(selectElement).append(option);
+
+            // Perbarui tampilan Select2
+            $(selectElement).trigger('change');
         }
 
         var datatable;
@@ -147,7 +168,7 @@
                         }
                     },
                 ],
-                ajax: "{{ route('anggaran-belanja.index') }}",
+                ajax: "{{ route('pengurus-jemaat.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: '#',
@@ -155,18 +176,18 @@
 
                     },
                     {
-                        data: 'jenis_anggaran',
-                        name: 'jenis_anggaran',
+                        data: 'nama',
+                        name: 'nama',
                         orderable: false,
                     },
                     {
-                        data: 'sumber_anggaran',
-                        name: 'sumber_anggaran',
+                        data: 'bidang',
+                        name: 'bidang',
                         orderable: false,
                     },
                     {
-                        data: 'nominal_anggaran',
-                        name: 'nominal_anggaran',
+                        data: 'jabatan',
+                        name: 'jabatan',
                         orderable: false,
                     },
                     {
@@ -178,17 +199,17 @@
                 ],
             });
 
-            $('#filterData').on('change', function() {
-                const selectedFilter = $(this).val();
-                datatable.ajax.url('{{ route('anggaran-belanja.index') }}?jenis_anggaran=' +
-                        selectedFilter)
-                    .load();
-            });
+            // $('#filterData').on('change', function() {
+            //     const selectedFilter = $(this).val();
+            //     datatable.ajax.url('{{ route('anggaran-belanja.index') }}?jenis_anggaran=' +
+            //             selectedFilter)
+            //         .load();
+            // });
 
-            $('#reload').on('click', function() {
-                $('#filterData').val('');
-                datatable.ajax.url('{{ route('anggaran-belanja.index') }}').load();
-            });
+            // $('#reload').on('click', function() {
+            //     $('#filterData').val('');
+            //     datatable.ajax.url('{{ route('anggaran-belanja.index') }}').load();
+            // });
 
         });
 
@@ -198,11 +219,11 @@
 
         $('#btnPrint').on('click', function() {
             datatable.button('.buttons-print').trigger();
-        });
+        })
 
         async function hapus(id) {
             Swal.fire({
-                title: 'Hapus Data?',
+                title: 'Hapus Data ID ' + id + '?',
                 text: 'Data akan dihapus permanen!',
                 icon: 'warning',
                 showCancelButton: true,
@@ -214,21 +235,22 @@
                 if (result.isConfirmed) {
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: '/anggaran-belanja/destroy/' + id,
+                        url: '/pengurus-jemaat/destroy/' + id,
                         type: 'DELETE',
                         data: {
                             _token: csrfToken
                         },
                         success: function(response) {
-                            console.log('Response:', response);
                             if (response.status) {
-                                Swal.fire(
-                                    'Terhapus!',
-                                    'Data berhasil dihapus.',
-                                    'success'
-                                );
-                                $('#datatable').DataTable().ajax.reload();
-
+                                Swal.fire({
+                                    title: 'Terhapus!',
+                                    text: 'Data berhasil dihapus.',
+                                    icon: 'success',
+                                    // timer: 500,
+                                    timerProgressBar: true,
+                                }).then(() => {
+                                    $('#datatable').DataTable().ajax.reload();
+                                });
                             } else {
                                 Swal.fire(
                                     'Error!',

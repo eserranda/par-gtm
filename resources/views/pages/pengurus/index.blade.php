@@ -15,7 +15,7 @@
 @endpush
 
 @section('page_title')
-    Data Pengurus
+    Data Pengurus Sinode
 @endsection
 
 @section('content')
