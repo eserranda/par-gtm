@@ -32,7 +32,7 @@
 
                   <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
-                          <i class="mdi mdi-briefcase-clock"></i>
+                          <i class="mdi mdi-clipboard-multiple-outline"></i>
                           <span>Data Adminstrasi</span>
                       </a>
                       <ul class="sub-menu" aria-expanded="false">
@@ -68,7 +68,7 @@
 
                   <li>
                       <a href="/pengurus-jemaat" class="waves-effect">
-                          <i class="mdi mdi-cash-multiple"></i>
+                          <i class="mdi mdi-account-edit-outline"></i>
                           <span>Pengurus Par Jemaat</span>
                       </a>
                   </li>
