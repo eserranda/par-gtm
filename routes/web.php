@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BidangSatuController;
 use App\Http\Controllers\BidangTigaController;
 use App\Http\Controllers\PengurusJemaatController;
+use App\Http\Controllers\PengurusKlasisController;
 use App\Http\Controllers\AnggaranBelanjaController;
 use App\Http\Controllers\ProgramKerjaKlasisController;
 
@@ -33,7 +34,9 @@ Route::post('login', [UserController::class, 'login'])->middleware('guest');
 
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
-Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/', function () {
+    return view('pages/home/index');
+});
 
 Route::prefix('dashboard')->controller(DashboardController::class)->group(function () {
     Route::get('/', 'index')->name('dashboard.index')->middleware('auth');
@@ -97,6 +100,14 @@ Route::prefix('anggaran-belanja')->controller(AnggaranBelanjaController::class)-
 })->middleware('auth');
 
 // Route::get('/admin', [AdminController::class, 'index'])->middleware('role:admin,editor');
+
+Route::prefix('pengurus-klasis')->controller(PengurusKlasisController::class)->group(function () {
+    Route::get('/', 'index')->name('pengurus-klasis.index');
+    Route::post('/store', 'store');
+    Route::get('/findById/{id}', 'findById');
+    Route::post('/update', 'update');
+    Route::delete('/destroy/{id}', 'destroy');
+})->middleware('auth');
 
 Route::prefix('pengurus-jemaat')->controller(PengurusJemaatController::class)->group(function () {
     Route::get('/', 'index')->name('pengurus-jemaat.index')->middleware('role:super_admin,admin');

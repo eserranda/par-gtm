@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PengurusJemaat;
+use App\Models\PengurusKlasis;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class PengurusJemaatController extends Controller
+class PengurusKlasisController extends Controller
 {
 
     public function index(Request $request)
@@ -15,7 +15,7 @@ class PengurusJemaatController extends Controller
         if ($request->ajax()) {
             $dataFilter = $request->input('filter');
 
-            $query = PengurusJemaat::query();
+            $query = PengurusKlasis::query();
             if ($dataFilter) {
                 $query->where('bidang', $dataFilter);
             }
@@ -39,7 +39,7 @@ class PengurusJemaatController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_jemaat' => 'required',
+            'id_klasis' => 'required',
             'nama' => 'required',
             'bidang' => 'required',
         ], [
@@ -52,7 +52,7 @@ class PengurusJemaatController extends Controller
                 'messages' => $validator->errors(),
             ], 422);
         }
-        $save = PengurusJemaat::create($request->all());
+        $save = PengurusKlasis::create($request->all());
         if ($save) {
             return response()->json([
                 'success' => true,
@@ -68,14 +68,15 @@ class PengurusJemaatController extends Controller
 
     public function findById($id)
     {
-        $data = PengurusJemaat::find($id);
+        $data = PengurusKlasis::find($id);
         return response()->json($data);
     }
 
-    public function update(Request $request, PengurusJemaat $pengurusJemaat)
+
+    public function update(Request $request, PengurusKlasis $pengurusKlasis)
     {
         $validator = Validator::make($request->all(), [
-            'edit_id_jemaat' => 'required',
+            'edit_id_klasis' => 'required',
             'edit_nama' => 'required',
             'edit_bidang' => 'required',
         ], [
@@ -90,8 +91,8 @@ class PengurusJemaatController extends Controller
             ], 422);
         }
 
-        $update = $pengurusJemaat->where('id', $request->input('id'))->update([
-            'id_jemaat' => $request->input('edit_id_jemaat'),
+        $update = $pengurusKlasis->where('id', $request->input('id'))->update([
+            'id_klasis' => $request->input('edit_id_klasis'),
             'nama' => $request->input('edit_nama'),
             'bidang' => $request->input('edit_bidang'),
             'jabatan' => $request->input('edit_jabatan'),
@@ -111,10 +112,10 @@ class PengurusJemaatController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PengurusJemaat $pengurusJemaat, $id)
+    public function destroy(PengurusKlasis $pengurusKlasis, $id)
     {
         try {
-            $deleted = $pengurusJemaat::findOrFail($id);
+            $deleted = $pengurusKlasis::findOrFail($id);
             $deleted->delete();
 
             return response()->json(['status' => true, 'message' => 'Data berhasil dihapus'], 200);

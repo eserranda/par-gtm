@@ -64,7 +64,26 @@
                       </a>
                   </li>
 
+                  <li>
+                      <a href="/pengurus-klasis" class="waves-effect">
+                          <i class="mdi mdi-account-edit-outline"></i>
+                          <span>Pengurus par Klasis</span>
+                      </a>
+                  </li>
+
                   <li class="menu-title">Jemaat/PAR</li>
+
+                  {{-- <li>
+                      <a href="javascript: void(0);" class="has-arrow waves-effect">
+                          <i class="mdi mdi-briefcase-clock"></i>
+                          <span>Proker Par Jemaat</span>
+                      </a>
+                      <ul class="sub-menu" aria-expanded="false">
+                          <li><a href="bidang-satu">Bidang Theologi</a></li>
+                          <li><a href="bidang-dua">Bidang Pembinaan</a></li>
+                          <li><a href="bidang-tiga">Bidang Sosial Diakonia dan Dana</a></li>
+                      </ul>
+                  </li> --}}
 
                   <li>
                       <a href="/pengurus-jemaat" class="waves-effect">
