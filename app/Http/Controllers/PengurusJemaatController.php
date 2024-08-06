@@ -41,7 +41,6 @@ class PengurusJemaatController extends Controller
         $validator = Validator::make($request->all(), [
             'id_jemaat' => 'required',
             'nama' => 'required',
-            'bidang' => 'required',
         ], [
             'required' => ':attribute harus diisi',
         ]);
@@ -77,7 +76,6 @@ class PengurusJemaatController extends Controller
         $validator = Validator::make($request->all(), [
             'edit_id_jemaat' => 'required',
             'edit_nama' => 'required',
-            'edit_bidang' => 'required',
         ], [
             'required' => ':attribute harus diisi',
         ],);
