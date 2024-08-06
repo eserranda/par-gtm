@@ -8,24 +8,10 @@
             <div class="modal-body">
                 <form id="addForm">
                     <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label" for="bidang">Bidang</label>
-                            <select class="form-select" id="bidang" name="bidang">
-                                <option value="" selected disabled>Pilih bidang</option>
-                                <option value="Bidang Pembinaan">Bidang Pembinaan</option>Z
-                                <option value="Bidang Kreatif">Bidang Kreatif</option>Z
-                            </select>
-                            <div class="invalid-feedback">
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="nama_kegiatan">Nama Kegiatan</label>
-                                <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan"
+                                <label class="form-label" for="kegiatan">Nama Kegiatan</label>
+                                <input type="text" class="form-control" id="kegiatan" name="kegiatan"
                                     placeholder="Nama Kegiatan">
                                 <div class="invalid-feedback">
 
@@ -35,9 +21,9 @@
                         <!-- end col -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="waktu_dan_tempat">Waktu Dan Tempat</label>
-                                <input type="text" class="form-control" id="waktu_dan_tempat" name="waktu_dan_tempat"
-                                    placeholder="Waktu Dan Tempat">
+                                <label class="form-label" for="waktu">Waktu</label>
+                                <input type="text" class="form-control" id="waktu" name="waktu"
+                                    placeholder="Waktu ">
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -50,45 +36,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Tujuan</label>
-                                <textarea class="form-control" placeholder="Tujuan" rows="3" name="tujuan" id="tujuan"></textarea>
-                                <div class="invalid-feedback">
-
-                                </div>
+                                <label class="form-label">Tempat</label>
+                                <input type="text" class="form-control" id="tempat" name="tempat"
+                                    placeholder="Tempat">
+                                <div class="invalid-feedback"> </div>
                             </div>
                         </div>
                         <!-- end col -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="sasaran_belanja">Sasaran Belanja</label>
-                                <input type="text" class="form-control" id="sasaran_belanja" name="sasaran_belanja"
-                                    placeholder="Sasaran Belanja">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="sumber_biaya">Sumber Biaya</label>
-                                <input type="text" class="form-control" id="sumber_biaya" name="sumber_biaya"
-                                    placeholder="Sumber Biaya">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="penanggung_jawab">Penanggung Jawab</label>
-                                <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab"
-                                    placeholder="Penanggung Jawab">
-                                <div class="invalid-feedback">
-
-                                </div>
+                                <label class="form-label" for="pelaksana">Pelaksana</label>
+                                <textarea class="form-control" id="pelaksana" name="pelaksana" rows="3" placeholder="Pelaksana"></textarea>
+                                <div class="invalid-feedback"> </div>
                             </div>
                         </div>
                     </div>
@@ -108,24 +67,6 @@
 
 @push('scripts')
     <script>
-        // async function edit(id) {
-        //     fetch('/bidang-dua/findById/' + id)
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             document.getElementById('edit_id').value = data.id;
-        //             document.getElementById('edit_nama_kegiatan').value = data.nama_kegiatan;
-        //             document.getElementById('edit_waktu_dan_tempat').value = data.waktu_dan_tempat;
-        //             document.getElementById('edit_tujuan').value = data.tujuan;
-        //             document.getElementById('edit_sasaran_belanja').value = data.sasaran_belanja;
-        //             document.getElementById('edit_sumber_biaya').value = data.sumber_biaya;
-        //             document.getElementById('edit_penanggung_jawab').value = data.penanggung_jawab;
-        //         })
-        //         .catch(error => console.error(error));
-        //     // show modal edit
-        //     $('#editModal').modal('show');
-        // }
-
-
         document.getElementById('addForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -134,7 +75,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/bidang-dua/store', {
+                const response = await fetch('/kegiatan/store', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

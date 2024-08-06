@@ -22,7 +22,7 @@
 @endpush
 
 @section('page_title')
-    Program Kerja Klasis
+    Program Kerja Par Klasis
 @endsection
 @section('content')
     <div class="row">

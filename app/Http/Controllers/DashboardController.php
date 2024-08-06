@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Jemaat;
 use App\Models\Klasis;
+use App\Models\Kegiatan;
 use App\Models\Pengurus;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
@@ -30,12 +31,11 @@ class DashboardController extends Controller
         return view('pages.dashboard.index',  compact('klasis', 'pengurus', 'jemaat', 'pengurus_jemaat', 'anggran_sinode', 'program_klasis', 'user'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function home()
     {
-        //
+        $kegiatans = Kegiatan::latest('created_at')->get();
+        return view('pages.home.index', compact('kegiatans'));
     }
 
     /**

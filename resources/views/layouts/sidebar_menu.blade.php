@@ -57,6 +57,13 @@
                       </li>
                   @endif
 
+                  <li>
+                      <a href="/kegiatan" class="waves-effect">
+                          <i class="mdi mdi-cash-multiple"></i>
+                          <span>Kegiatan</span>
+                      </a>
+                  </li>
+
                   @if (auth()->user()->hasAnyRole(['super_admin', 'klasis']))
                       <li class="menu-title">Klasis</li>
 

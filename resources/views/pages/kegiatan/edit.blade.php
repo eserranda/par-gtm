@@ -1,4 +1,4 @@
-<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="editModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,26 +6,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addForm">
-                    <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label" for="bidang">Bidang</label>
-                            <select class="form-select" id="bidang" name="bidang">
-                                <option value="" selected disabled>Pilih bidang</option>
-                                <option value="Bidang Pembinaan">Bidang Pembinaan</option>Z
-                                <option value="Bidang Kreatif">Bidang Kreatif</option>Z
-                            </select>
-                            <div class="invalid-feedback">
-
-                            </div>
-                        </div>
-                    </div>
-
+                <form id="editForm">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="nama_kegiatan">Nama Kegiatan</label>
-                                <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan"
+                                <label class="form-label" for="kegiatan">Nama Kegiatan</label>
+                                <input type="hidden" class="form-control" id="edit_id" name="id">
+                                <input type="text" class="form-control" id="edit_kegiatan" name="edit_kegiatan"
                                     placeholder="Nama Kegiatan">
                                 <div class="invalid-feedback">
 
@@ -35,9 +22,9 @@
                         <!-- end col -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="waktu_dan_tempat">Waktu Dan Tempat</label>
-                                <input type="text" class="form-control" id="waktu_dan_tempat" name="waktu_dan_tempat"
-                                    placeholder="Waktu Dan Tempat">
+                                <label class="form-label" for="waktu">Waktu</label>
+                                <input type="text" class="form-control" id="edit_waktu" name="edit_waktu"
+                                    placeholder="Waktu ">
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -50,45 +37,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Tujuan</label>
-                                <textarea class="form-control" placeholder="Tujuan" rows="3" name="tujuan" id="tujuan"></textarea>
-                                <div class="invalid-feedback">
-
-                                </div>
+                                <label class="form-label">Tempat</label>
+                                <input type="text" class="form-control" id="edit_tempat" name="edit_tempat"
+                                    placeholder="Tempat">
+                                <div class="invalid-feedback"> </div>
                             </div>
                         </div>
                         <!-- end col -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="sasaran_belanja">Sasaran Belanja</label>
-                                <input type="text" class="form-control" id="sasaran_belanja" name="sasaran_belanja"
-                                    placeholder="Sasaran Belanja">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="sumber_biaya">Sumber Biaya</label>
-                                <input type="text" class="form-control" id="sumber_biaya" name="sumber_biaya"
-                                    placeholder="Sumber Biaya">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="penanggung_jawab">Penanggung Jawab</label>
-                                <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab"
-                                    placeholder="Penanggung Jawab">
-                                <div class="invalid-feedback">
-
-                                </div>
+                                <label class="form-label" for="pelaksana">Pelaksana</label>
+                                <textarea class="form-control" id="edit_pelaksana" name="edit_pelaksana" rows="3" placeholder="Pelaksana"></textarea>
+                                <div class="invalid-feedback"> </div>
                             </div>
                         </div>
                     </div>
@@ -96,7 +56,7 @@
                     <div class="float-end">
                         <button type="button" class="btn btn-light waves-effect mx-2"
                             data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary  " type="submit">Simpan</button>
+                        <button class="btn btn-primary  " type="submit">Update</button>
                     </div>
                 </form>
                 <!-- end form -->
@@ -108,25 +68,7 @@
 
 @push('scripts')
     <script>
-        // async function edit(id) {
-        //     fetch('/bidang-dua/findById/' + id)
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             document.getElementById('edit_id').value = data.id;
-        //             document.getElementById('edit_nama_kegiatan').value = data.nama_kegiatan;
-        //             document.getElementById('edit_waktu_dan_tempat').value = data.waktu_dan_tempat;
-        //             document.getElementById('edit_tujuan').value = data.tujuan;
-        //             document.getElementById('edit_sasaran_belanja').value = data.sasaran_belanja;
-        //             document.getElementById('edit_sumber_biaya').value = data.sumber_biaya;
-        //             document.getElementById('edit_penanggung_jawab').value = data.penanggung_jawab;
-        //         })
-        //         .catch(error => console.error(error));
-        //     // show modal edit
-        //     $('#editModal').modal('show');
-        // }
-
-
-        document.getElementById('addForm').addEventListener('submit', async (event) => {
+        document.getElementById('editForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const form = event.target;
@@ -134,7 +76,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/bidang-dua/store', {
+                const response = await fetch('/kegiatan/update', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -182,7 +124,7 @@
                     });
 
                     $('#datatable').DataTable().ajax.reload();
-                    $('#addModal').modal('hide');
+                    $('#editModal').modal('hide');
                 }
 
 

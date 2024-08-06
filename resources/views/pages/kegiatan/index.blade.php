@@ -1,4 +1,5 @@
 @extends('layouts.master')
+
 @push('header_comp')
     <!-- DataTables -->
     <link href="{{ asset('assets') }}/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
@@ -12,17 +13,10 @@
 
     <!-- Sweet Alert-->
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- Select2 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 @endpush
 
 @section('page_title')
-    Program Kerja Par Jemaat
+    Data Kegiatan Par Klasis dan Jemaat
 @endsection
 @section('content')
     <div class="row">
@@ -30,42 +24,28 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="d-flex align-items-center ">
-                            <label class="col-form-label col-md-3">Filter :</label>
-                            <select class="form-select me-2 col-md-1" id="filterData">
-                                <option value="" selected disabled>Pilih bidang</option>
-                                <option value="Teologia">Teologia</option>
-                                <option value="Pembinaan">Pembinaan</option>
-                                <option value="Sosial Diokonia dan Dana">Sosial Diokonia dan Dana</option>
-                            </select>
-                            <button type="button" class="btn btn-light waves-effect col-2" id="reload">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20"
-                                    viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">`
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
-                                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
-                                </svg>
-                            </button>
-                        </div>
+
                         <div class="d-flex gap-2">
                             <button type="button" class="btn btn-info waves-effect" id="btnPrint">Print</button>
                             <button type="button" class="btn btn-success waves-effect" id="btnExcel">Excel</button>
+                        </div>
+
+                        <div class="d-flex gap-2">
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                                 data-bs-target="#addModal">Tambah Data</button>
                         </div>
                     </div>
+
                     <div class="table-responsive">
                         <table id="datatable" class="table table-striped table-bordered dt-responsive"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>jemaat</th>
-                                    <th>Bidang</th>
-                                    <th>Tujuan</th>
+                                    <th>Nama Kegiatan</th>
                                     <th>Waktu</th>
                                     <th>Tempat</th>
+                                    <th>Pelaksana</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -80,10 +60,9 @@
         </div>
     </div>
 
-    @include('pages.program-kerja-jemaat.add')
-    @include('pages.program-kerja-jemaat.edit')
+    @include('pages.kegiatan.add')
+    @include('pages.kegiatan.edit')
 @endsection
-
 
 @push('scripts')
     <!-- Required datatable js -->
@@ -102,66 +81,31 @@
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
+    <!-- SweetAlert2 -->
     <!-- Sweet Alerts js -->
     <script src="{{ asset('assets') }}/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <!-- Sweet alert init js-->
     <script src="{{ asset('assets') }}/js/pages/sweet-alerts.init.js"></script>
 
-    <!-- Select2 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
-
     <script>
         function edit(id) {
-            fetch('/program-kerja-jemaat/findById/' + id)
+            fetch('/kegiatan/findById/' + id)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_id_jemaat').value = data.id_jemaat;
-                    document.getElementById('edit_bidang').value = data.bidang
-                    document.getElementById('edit_tujuan').value = data.tujuan;
+                    document.getElementById('edit_kegiatan').value = data.kegiatan
                     document.getElementById('edit_waktu').value = data.waktu;
                     document.getElementById('edit_tempat').value = data.tempat;
-                    var editIdjemaatSelect = document.getElementById('edit_id_jemaat');
-
-                    fetch('/jemaat/findOne/' + data.id_jemaat, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Gagal mengambil data');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            updateOptionsAndSelect2jemaat(editIdjemaatSelect, data.id, data.nama_jemaat);
-                        })
-                        .catch(error => console.error('Error fetching data:', error));
+                    document.getElementById('edit_pelaksana').value = data.pelaksana;
                 })
                 .catch(error => console.error(error));
             // show modal edit
             $('#editModal').modal('show');
         }
 
-        function updateOptionsAndSelect2jemaat(selectElement, id, name) {
-            // Hapus semua opsi yang ada di elemen <select>
-            $(selectElement).empty();
-
-            // Tambahkan opsi baru ke elemen <select>
-            var option = new Option(name, id, true, true);
-            $(selectElement).append(option);
-
-            // Perbarui tampilan Select2
-            $(selectElement).trigger('change');
-        }
-
         var datatable;
         $(document).ready(function() {
-            const selectedKBidang = $('#filterData').val();
             datatable = $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -174,7 +118,7 @@
                 buttons: [{
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4]
                         },
                         init: function(api, node, config) {
                             $(node).hide();
@@ -183,14 +127,14 @@
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4]
                         },
                         init: function(api, node, config) {
                             $(node).hide();
                         }
                     },
                 ],
-                ajax: "{{ route('program-kerja-jemaat.index') }}",
+                ajax: "{{ route('kegiatan.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: '#',
@@ -198,18 +142,8 @@
 
                     },
                     {
-                        data: 'id_jemaat',
-                        name: 'id_jemaat',
-                        orderable: false,
-                    },
-                    {
-                        data: 'bidang',
-                        name: 'bidang',
-                        orderable: false,
-                    },
-                    {
-                        data: 'tujuan',
-                        name: 'tujuan',
+                        data: 'kegiatan',
+                        name: 'kegiatan',
                         orderable: false,
                     },
                     {
@@ -223,6 +157,11 @@
                         orderable: false,
                     },
                     {
+                        data: 'pelaksana',
+                        name: 'sasaran_belanja',
+                        orderable: false,
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -231,15 +170,10 @@
                 ],
             });
 
-            $('#filterData').on('change', function() {
-                const selectedData = $(this).val();
-                datatable.ajax.url('{{ route('program-kerja-jemaat.index') }}?filter=' + selectedData)
-                    .load();
-            });
 
             $('#reload').on('click', function() {
-                $('#filterData').val('');
-                datatable.ajax.url('{{ route('program-kerja-jemaat.index') }}').load();
+                $('#filterBidang').val('');
+                datatable.ajax.url('{{ route('bidang-dua.index') }}').load();
             });
 
         });
@@ -266,7 +200,7 @@
                 if (result.isConfirmed) {
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: '/program-kerja-jemaat/destroy/' + id,
+                        url: '/kegiatan/destroy/' + id,
                         type: 'DELETE',
                         data: {
                             _token: csrfToken

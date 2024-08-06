@@ -13,6 +13,7 @@ use App\Http\Controllers\BidangTigaController;
 use App\Http\Controllers\PengurusJemaatController;
 use App\Http\Controllers\PengurusKlasisController;
 use App\Http\Controllers\AnggaranBelanjaController;
+use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProgramKerjaJemaatController;
 use App\Http\Controllers\ProgramKerjaKlasisController;
 
@@ -35,9 +36,11 @@ Route::post('login', [UserController::class, 'login'])->middleware('guest');
 
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('pages/home/index');
-});
+Route::get('/',  [DashboardController::class, 'home']);
+
+// Route::get('/', function () {
+//     return view('pages/home/index');
+// });
 
 Route::prefix('dashboard')->controller(DashboardController::class)->group(function () {
     Route::get('/', 'index')->name('dashboard.index')->middleware('auth');
@@ -53,6 +56,15 @@ Route::prefix('jemaat')->controller(JemaatController::class)->group(function () 
     Route::get('/getIdAndNameAllKlasis', 'getIdAndNameAllKlasis');
     Route::get('/getAllJemaat', 'getAllJemaat');
     Route::get('/findOne/{id}', 'findOne');
+});
+
+Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
+    Route::get('/', 'index')->name('kegiatan.index')->middleware('auth');
+    Route::get('/create', 'create');
+    Route::get('/findById/{id}', 'findById');
+    Route::post('/store', 'store');
+    Route::post('/update', 'update');
+    Route::delete('/destroy/{id}', 'destroy');
 });
 
 Route::prefix('program-kerja-jemaat')->controller(ProgramKerjaJemaatController::class)->group(function () {

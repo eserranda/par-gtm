@@ -192,7 +192,7 @@
     <section id="kegiatan" class="py-5">
         <div class="container">
             <h2 class="section-title">Kegiatan Persekutuan Anak dan Remaja GTM</h2>
-            {{-- <div class="table-responsive">
+            <div class="table-responsive">
                 <table class="table table-striped custom-table">
                     <thead>
                         <tr>
@@ -204,37 +204,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Persekutuan Doa</td>
-                            <td>10 Agustus 2024</td>
-                            <td>10:00 - 12:00</td>
-                            <td>Aula Utama</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Retreat Remaja</td>
-                            <td>24 Agustus 2024</td>
-                            <td>09:00 - 17:00</td>
-                            <td>Vila Pelangi</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Bakti Sosial</td>
-                            <td>15 September 2024</td>
-                            <td>08:00 - 15:00</td>
-                            <td>Desa Suka Maju</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Lomba Cerdas Cermat Alkitab</td>
-                            <td>29 September 2024</td>
-                            <td>13:00 - 16:00</td>
-                            <td>Gedung Serba Guna</td>
-                        </tr>
+                        @foreach ($kegiatans as $d)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $d->kegiatan }}</td>
+                                <td>{{ $d->waktu }}</td>
+                                <td>{{ $d->tempat }}</td>
+                                <td>{{ $d->pelaksana }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
-            </div> --}}
+            </div>
         </div>
     </section>
 
