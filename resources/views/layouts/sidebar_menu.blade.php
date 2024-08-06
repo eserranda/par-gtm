@@ -10,70 +10,74 @@
                   <li class="menu-title">Main</li>
 
                   <li>
-                      <a href="/" class="waves-effect">
+                      <a href="/dashboard" class="waves-effect">
                           <i class="mdi mdi-view-dashboard"></i>
                           <span>Dashboard</span>
                       </a>
                   </li>
 
-                  <li class="menu-title">Sinode</li>
+                  @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
+                      <li class="menu-title">Sinode</li>
 
-                  <li>
-                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                          <i class="mdi mdi-briefcase-clock"></i>
-                          <span>Program Kerja Sinode</span>
-                      </a>
-                      <ul class="sub-menu" aria-expanded="false">
-                          <li><a href="bidang-satu">Bidang I</a></li>
-                          <li><a href="bidang-dua">Bidang II</a></li>
-                          <li><a href="bidang-tiga">Bidang III</a></li>
-                      </ul>
-                  </li>
+                      <li>
+                          <a href="javascript: void(0);" class="has-arrow waves-effect">
+                              <i class="mdi mdi-briefcase-clock"></i>
+                              <span>Program Kerja Sinode</span>
+                          </a>
+                          <ul class="sub-menu" aria-expanded="false">
+                              <li><a href="bidang-satu">Bidang I</a></li>
+                              <li><a href="bidang-dua">Bidang II</a></li>
+                              <li><a href="bidang-tiga">Bidang III</a></li>
+                          </ul>
+                      </li>
 
-                  <li>
-                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                          <i class="mdi mdi-clipboard-multiple-outline"></i>
-                          <span>Data Adminstrasi</span>
-                      </a>
-                      <ul class="sub-menu" aria-expanded="false">
-                          <li><a href="klasis">Data Klasis</a></li>
-                          <li><a href="/jemaat">Data Jemaat</a></li>
-                      </ul>
-                  </li>
+                      <li>
+                          <a href="javascript: void(0);" class="has-arrow waves-effect">
+                              <i class="mdi mdi-clipboard-multiple-outline"></i>
+                              <span>Data Adminstrasi</span>
+                          </a>
+                          <ul class="sub-menu" aria-expanded="false">
+                              <li><a href="klasis">Data Klasis</a></li>
+                              <li><a href="/jemaat">Data Jemaat</a></li>
+                          </ul>
+                      </li>
 
-                  <li>
-                      <a href="/pengurus" class="waves-effect">
-                          <i class="mdi mdi-account-group"></i>
-                          <span>Pengurus Sinode</span>
-                      </a>
-                  </li>
+                      <li>
+                          <a href="/pengurus" class="waves-effect">
+                              <i class="mdi mdi-account-group"></i>
+                              <span>Pengurus Sinode</span>
+                          </a>
+                      </li>
 
-                  <li>
-                      <a href="/anggaran-belanja" class="waves-effect">
-                          <i class="mdi mdi-cash-multiple"></i>
-                          <span>Anggaran Belanja</span>
-                      </a>
-                  </li>
+                      <li>
+                          <a href="/anggaran-belanja" class="waves-effect">
+                              <i class="mdi mdi-cash-multiple"></i>
+                              <span>Anggaran Belanja</span>
+                          </a>
+                      </li>
+                  @endif
 
-                  <li class="menu-title">Klasis</li>
+                  @if (auth()->user()->hasAnyRole(['super_admin', 'klasis']))
+                      <li class="menu-title">Klasis</li>
 
-                  <li>
-                      <a href="/program-kerja-klasis" class="waves-effect">
-                          <i class="mdi mdi-briefcase-clock"></i>
-                          <span>Program Kerja Klasis</span>
-                      </a>
-                  </li>
+                      <li>
+                          <a href="/program-kerja-klasis" class="waves-effect">
+                              <i class="mdi mdi-briefcase-clock"></i>
+                              <span>Program Kerja Klasis</span>
+                          </a>
+                      </li>
 
-                  <li>
-                      <a href="/pengurus-klasis" class="waves-effect">
-                          <i class="mdi mdi-account-edit-outline"></i>
-                          <span>Pengurus par Klasis</span>
-                      </a>
-                  </li>
+                      <li>
+                          <a href="/pengurus-klasis" class="waves-effect">
+                              <i class="mdi mdi-account-edit-outline"></i>
+                              <span>Pengurus par Klasis</span>
+                          </a>
+                      </li>
+                  @endif
+                  @if (auth()->user()->hasAnyRole(['super_admin', 'jemaat']))
+                      <li class="menu-title">Jemaat/PAR</li>
 
-                  <li class="menu-title">Jemaat/PAR</li>
-
-                  {{-- <li>
+                      {{-- <li>
                       <a href="javascript: void(0);" class="has-arrow waves-effect">
                           <i class="mdi mdi-briefcase-clock"></i>
                           <span>Proker Par Jemaat</span>
@@ -85,14 +89,13 @@
                       </ul>
                   </li> --}}
 
-                  <li>
-                      <a href="/pengurus-jemaat" class="waves-effect">
-                          <i class="mdi mdi-account-edit-outline"></i>
-                          <span>Pengurus Par Jemaat</span>
-                      </a>
-                  </li>
-
-
+                      <li>
+                          <a href="/pengurus-jemaat" class="waves-effect">
+                              <i class="mdi mdi-account-edit-outline"></i>
+                              <span>Pengurus Par Jemaat</span>
+                          </a>
+                      </li>
+                  @endif
 
                   {{-- <li>
                       <a href="/jemaat" class="waves-effect">
@@ -100,22 +103,22 @@
                           <span>Data Jemaat</span>
                       </a>
                   </li> --}}
+                  @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
+                      <li class="menu-title">Authications</li>
+                      <li>
+                          <a href="/users" class="waves-effect">
+                              <i class="mdi mdi-account"></i>
+                              <span>Users</span>
+                          </a>
+                      </li>
 
-                  <li class="menu-title">Authications</li>
-                  <li>
-                      <a href="/users" class="waves-effect">
-                          <i class="mdi mdi-account"></i>
-                          <span>Users</span>
-                      </a>
-                  </li>
-
-                  <li>
-                      <a href="/roles" class="waves-effect">
-                          <i class="mdi mdi-account-key"></i>
-                          <span>Role</span>
-                      </a>
-                  </li>
-
+                      <li>
+                          <a href="/roles" class="waves-effect">
+                              <i class="mdi mdi-account-key"></i>
+                              <span>Role</span>
+                          </a>
+                      </li>
+                  @endif
                   {{-- <li>
                       <a href="javascript: void(0);" class="waves-effect">
                           <i class="mdi mdi-clipboard-outline"></i>
