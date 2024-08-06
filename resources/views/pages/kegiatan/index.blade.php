@@ -27,7 +27,8 @@
 
                         <div class="d-flex gap-2">
                             <button type="button" class="btn btn-info waves-effect" id="btnPrint">Print</button>
-                            <button type="button" class="btn btn-success waves-effect" id="btnExcel">Excel</button>
+                            <button type="button" class="btn btn-light waves-effect fw-bold text-success" id="btnExcel">
+                                <i class="mdi mdi-microsoft-excel"></i></button>
                         </div>
 
                         <div class="d-flex gap-2">

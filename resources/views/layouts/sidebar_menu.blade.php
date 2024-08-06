@@ -59,8 +59,8 @@
 
                   <li>
                       <a href="/kegiatan" class="waves-effect">
-                          <i class="mdi mdi-cash-multiple"></i>
-                          <span>Kegiatan</span>
+                          <i class="mdi mdi-table-sync"></i>
+                          <span>Kegiatan PAR GTM</span>
                       </a>
                   </li>
 
