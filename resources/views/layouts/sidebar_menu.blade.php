@@ -63,14 +63,14 @@
                       <li>
                           <a href="/program-kerja-klasis" class="waves-effect">
                               <i class="mdi mdi-briefcase-clock"></i>
-                              <span>Program Kerja Klasis</span>
+                              <span>Proker Par Klasis</span>
                           </a>
                       </li>
 
                       <li>
                           <a href="/pengurus-klasis" class="waves-effect">
                               <i class="mdi mdi-account-edit-outline"></i>
-                              <span>Pengurus par Klasis</span>
+                              <span>Pengurus Par Klasis</span>
                           </a>
                       </li>
                   @endif
@@ -88,6 +88,14 @@
                           <li><a href="bidang-tiga">Bidang Sosial Diakonia dan Dana</a></li>
                       </ul>
                   </li> --}}
+
+                      <li>
+                          <a href="/program-kerja-jemaat" class="waves-effect">
+                              <i class="mdi mdi-briefcase-clock"></i>
+                              <span>Proker Par Jemaat</span>
+                          </a>
+                      </li>
+
 
                       <li>
                           <a href="/pengurus-jemaat" class="waves-effect">

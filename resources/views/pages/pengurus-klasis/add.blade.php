@@ -177,7 +177,7 @@
                         }
                     });
 
-                    const form = document.getElementById('editForm');
+                    const form = document.getElementById('addForm');
                     form.reset();
                     $('#datatable').DataTable().ajax.reload();
                     $('#addModal').modal('hide');

@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="id_jemaat">Klasis</label>
+                                <label class="form-label" for="edit_id_klasis">Klasis</label>
                                 <input type="hidden" class="form-control" id="edit_id" name="id">
                                 <select class="form-control form-select" id="edit_id_klasis" name="edit_id_klasis">
 
@@ -141,7 +141,7 @@
                 if (!data.success) {
                     Object.keys(data.messages).forEach(fieldName => {
                         const inputField = document.getElementById(fieldName);
-                        if (inputField && fieldName == 'id_jemaat') {
+                        if (inputField && fieldName == 'id_klasis') {
                             inputField.classList.add('is-invalid');
                         } else {
                             inputField.classList.add('is-invalid');
@@ -157,7 +157,7 @@
                     validFields.forEach(validField => {
                         const fieldName = validField.id;
                         if (!data.messages[fieldName]) {
-                            if (fieldName === 'id_jemaat') {
+                            if (fieldName === 'id_klasis') {
                                 validField.classList.remove('is-invalid');
                             } else {
                                 validField.classList.remove('is-invalid');

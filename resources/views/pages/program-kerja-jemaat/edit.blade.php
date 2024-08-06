@@ -1,76 +1,77 @@
-<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="editModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="myModalLabel">Tambah Data </h5>
-                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-                <button type="button" class="btn-close" onclick="closeModalAdd()">
-                </button>
+                <h5 class="modal-title mt-0" id="myModalLabel">Update Data </h5>
+                <button type="button" class="btn-close" onclick="closeModalEdit()"> </button>
             </div>
             <div class="modal-body">
-                <form id="addForm">
+                <form id="editForm">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="id_jemaat">Jemaat</label>
-                                <select class="form-control form-select" id="id_jemaat" name="id_jemaat">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="edit_id_jemaat">Jemaat</label>
+                            <select class="form-select" id="edit_id_jemaat" name="edit_id_jemaat">
 
-                                </select>
-                                <div class="invalid-feedback"></div>
+                            </select>
+                            <div class="invalid-feedback">
+
                             </div>
                         </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="edit_bidang">Bidang</label>
+                            <select class="form-select" id="edit_bidang" name="edit_bidang">
+                                <option value="" selected disabled>Pilih bidang</option>
+                                <option value="Teologia">Teologia</option>
+                                <option value="Pembinaan">Pembinaan</option>
+                                <option value="Sosial Diokonia dan Dana">Sosial Diokonia dan Dana</option>
+                            </select>
+                            <div class="invalid-feedback">
 
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="nama_pengurus">Bidang</label>
-                                <select class="form-select" id="bidang" name="bidang">
-                                    <option value="" selected disabled>Pilih bidang</option>
-                                    <option value="Teologi/Kurikulum">Teologi/Kurikulum</option>
-                                    <option value="Kreatif/Pembinaan">Kreatif/Pembinaan</option>
-                                    <option value="Dana/Diakonia">Dana/Diakonia</option>
-                                </select>
-
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end row -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="nama_pengurus">Nama</label>
-                                <input type="text" class="form-control" id="nama" name="nama"
-                                    placeholder="Nama">
-                                <div class="invalid-feedback"> </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="nama_pengurus">Jabatan</label>
-                                <select class="form-select" id="jabatan" name="jabatan">
-                                    <option value="" selected disabled>Pilih Jabatan</option>
-                                    <option value="Ketua Umum">Ketua Umum</option>
-                                    <option value="Ketua 1">Ketua 1</option>
-                                    <option value="Ketua 2">Ketua 2</option>
-                                    <option value="Ketua 3">Ketua 3</option>
-                                    <option value="Sekretaris">Sekretaris</option>
-                                    <option value="Wakil Sekretaris">Wakil Sekretaris</option>
-                                    <option value="Bendahara">Bendahara</option>
-                                    <hr class="my-2">
-                                    {{-- <option value="Koordinator">Koordinator</option> --}}
-                                    <option value="Anggota">Anggota</option>
-                                </select>
-                                <div class="invalid-feedback"> </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Tujuan</label>
+                                <textarea class="form-control" placeholder="Tujuan" rows="3" name="edit_tujuan" id="edit_tujuan"></textarea>
+                                <div class="invalid-feedback">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="waktu">Waktu</label>
+                                <input type="hidden" id="edit_id" name="id">
+                                <input type="text" class="form-control" id="edit_waktu" name="edit_waktu"
+                                    placeholder="Waktu">
+                                <div class="invalid-feedback">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="tempat">Tempat</label>
+                                <input type="text" class="form-control" id="edit_tempat" name="edit_tempat"
+                                    placeholder="Tempat">
+                                <div class="invalid-feedback">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                    </div>
                     <!-- end row -->
                     <div class="float-end">
-                        <button type="button" class="btn btn-light waves-effect mx-2"
-                            data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary  " type="submit">Simpan</button>
+                        <button type="button" class="btn btn-light waves-effect mr-2"
+                            onclick="closeModalEdit()">Batal</button>
+                        <button class="btn btn-primary  " type="submit">Update</button>
                     </div>
                 </form>
                 <!-- end form -->
@@ -83,10 +84,11 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#id_jemaat').select2({
+            $('#edit_id_jemaat').select2({
                 theme: "bootstrap-5",
-                placeholder: "Pilih Jemaat",
-                dropdownParent: $('#addModal'),
+                placeholder: "Pilih jemaat",
+                // minimumInputLength: 1,
+                dropdownParent: $('#editModal'),
                 ajax: {
                     url: '/jemaat/getAllJemaat',
                     dataType: 'json',
@@ -101,7 +103,7 @@
             });
         });
 
-        function closeModalAdd() {
+        function closeModalEdit() {
             const invalidInputs = document.querySelectorAll('.is-invalid');
             invalidInputs.forEach(invalidInput => {
                 invalidInput.value = '';
@@ -113,12 +115,12 @@
                 }
             });
 
-            const form = document.getElementById('addForm');
+            const form = document.getElementById('editForm');
             form.reset();
-            $('#addModal').modal('hide');
+            $('#editModal').modal('hide');
         }
 
-        document.getElementById('addForm').addEventListener('submit', async (event) => {
+        document.getElementById('editForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const form = event.target;
@@ -126,7 +128,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/pengurus-jemaat/store', {
+                const response = await fetch('/program-kerja-jemaat/update', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -155,13 +157,11 @@
                     const validFields = document.querySelectorAll('.is-invalid');
                     validFields.forEach(validField => {
                         const fieldName = validField.id;
-                        if (!data.messages[fieldName]) {
-                            if (fieldName === 'id_jemaat') {
-                                validField.classList.remove('is-invalid');
-                            } else {
-                                validField.classList.remove('is-invalid');
-                                validField.nextElementSibling.textContent = '';
-                            }
+                        if (fieldName === 'id_jemaat') {
+                            validField.classList.remove('is-invalid');
+                        } else {
+                            validField.classList.remove('is-invalid');
+                            validField.nextElementSibling.textContent = '';
                         }
                     });
 
@@ -177,13 +177,11 @@
                         }
                     });
 
-                    const form = document.getElementById('addForm');
+                    const form = document.getElementById('editForm');
                     form.reset();
                     $('#datatable').DataTable().ajax.reload();
-                    $('#addModal').modal('hide');
-
+                    $('#editModal').modal('hide');
                 }
-
 
             } catch (error) {
                 console.error(error);

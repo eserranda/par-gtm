@@ -22,46 +22,68 @@
 @endpush
 
 @section('page_title')
-    Data Pengurus
+    Program Kerja Jemaat
 @endsection
-
 @section('content')
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="header-title"><b>Data Pengurus Par Klasis</b></h5>
-                        <div>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex align-items-center ">
+                            <label class="col-form-label col-md-3">Filter :</label>
+                            <select class="form-select me-2 col-md-1" id="filterData">
+                                <option value="" selected disabled>Pilih bidang</option>
+                                <option value="Teologia">Teologia</option>
+                                <option value="Pembinaan">Pembinaan</option>
+                                <option value="Sosial Diokonia dan Dana">Sosial Diokonia dan Dana</option>
+                            </select>
+                            <button type="button" class="btn btn-light waves-effect col-2" id="reload">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20"
+                                    viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">`
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="d-flex gap-2">
                             <button type="button" class="btn btn-info waves-effect" id="btnPrint">Print</button>
-                            <button type="button" class="btn btn-success waves-effect" id ="btnExcel">Excel</button>
+                            <button type="button" class="btn btn-success waves-effect" id="btnExcel">Excel</button>
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                                 data-bs-target="#addModal">Tambah Data</button>
                         </div>
                     </div>
-                    <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
-                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Pengurus</th>
-                                <th>Bidang</th>
-                                <th>Jabatan</th>
-                                <th>Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table id="datatable" class="table table-striped table-bordered dt-responsive"
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>jemaat</th>
+                                    <th>Bidang</th>
+                                    <th>Tujuan</th>
+                                    <th>Waktu</th>
+                                    <th>Tempat</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
 
-                        </tbody>
-                    </table>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    @include('pages.pengurus-klasis.add')
-    @include('pages.pengurus-klasis.edit')
+    @include('pages.program-kerja-jemaat.add')
+    @include('pages.program-kerja-jemaat.edit')
 @endsection
+
 
 @push('scripts')
     <!-- Required datatable js -->
@@ -80,8 +102,7 @@
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
-
-    <!-- SweetAlert2 -->
+    <!-- Sweet Alerts js -->
     <script src="{{ asset('assets') }}/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <!-- Sweet alert init js-->
@@ -90,20 +111,21 @@
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
+
     <script>
-        async function edit(id) {
-            fetch('/pengurus-klasis/findById/' + id)
+        function edit(id) {
+            fetch('/program-kerja-jemaat/findById/' + id)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_id_klasis').value = data.id_klasis;
-                    document.getElementById('edit_nama').value = data.nama;
-                    document.getElementById('edit_bidang').value = data.bidang;
-                    document.getElementById('edit_jabatan').value = data.jabatan;
+                    document.getElementById('edit_id_jemaat').value = data.id_jemaat;
+                    document.getElementById('edit_bidang').value = data.bidang
+                    document.getElementById('edit_tujuan').value = data.tujuan;
+                    document.getElementById('edit_waktu').value = data.waktu;
+                    document.getElementById('edit_tempat').value = data.tempat;
+                    var editIdjemaatSelect = document.getElementById('edit_id_jemaat');
 
-                    var editIdJemaat = document.getElementById('edit_id_klasis');
-
-                    fetch('/klasis/findOne/' + data.id_klasis, {
+                    fetch('/jemaat/findOne/' + data.id_jemaat, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -116,7 +138,7 @@
                             return response.json();
                         })
                         .then(data => {
-                            updateOptionsAndSelect2Klasis(editIdJemaat, data.id, data.nama_klasis);
+                            updateOptionsAndSelect2jemaat(editIdjemaatSelect, data.id, data.nama_jemaat);
                         })
                         .catch(error => console.error('Error fetching data:', error));
                 })
@@ -125,7 +147,7 @@
             $('#editModal').modal('show');
         }
 
-        function updateOptionsAndSelect2Klasis(selectElement, id, name) {
+        function updateOptionsAndSelect2jemaat(selectElement, id, name) {
             // Hapus semua opsi yang ada di elemen <select>
             $(selectElement).empty();
 
@@ -139,7 +161,7 @@
 
         var datatable;
         $(document).ready(function() {
-            const selectedFilter = $('#filterData').val();
+            const selectedKBidang = $('#filterData').val();
             datatable = $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -152,7 +174,7 @@
                 buttons: [{
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3]
+                            columns: [0, 1, 2, 3, 4, 5]
                         },
                         init: function(api, node, config) {
                             $(node).hide();
@@ -161,14 +183,14 @@
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns: [0, 1, 2, 3]
+                            columns: [0, 1, 2, 3, 4, 5]
                         },
                         init: function(api, node, config) {
                             $(node).hide();
                         }
                     },
                 ],
-                ajax: "{{ route('pengurus-klasis.index') }}",
+                ajax: "{{ route('program-kerja-jemaat.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: '#',
@@ -176,8 +198,8 @@
 
                     },
                     {
-                        data: 'nama',
-                        name: 'nama',
+                        data: 'id_jemaat',
+                        name: 'id_jemaat',
                         orderable: false,
                     },
                     {
@@ -186,8 +208,18 @@
                         orderable: false,
                     },
                     {
-                        data: 'jabatan',
-                        name: 'jabatan',
+                        data: 'tujuan',
+                        name: 'tujuan',
+                        orderable: false,
+                    },
+                    {
+                        data: 'waktu',
+                        name: 'waktu',
+                        orderable: false,
+                    },
+                    {
+                        data: 'tempat',
+                        name: 'tempat',
                         orderable: false,
                     },
                     {
@@ -199,17 +231,16 @@
                 ],
             });
 
-            // $('#filterData').on('change', function() {
-            //     const selectedFilter = $(this).val();
-            //     datatable.ajax.url('{{ route('anggaran-belanja.index') }}?jenis_anggaran=' +
-            //             selectedFilter)
-            //         .load();
-            // });
+            $('#filterData').on('change', function() {
+                const selectedData = $(this).val();
+                datatable.ajax.url('{{ route('program-kerja-jemaat.index') }}?filter=' + selectedData)
+                    .load();
+            });
 
-            // $('#reload').on('click', function() {
-            //     $('#filterData').val('');
-            //     datatable.ajax.url('{{ route('anggaran-belanja.index') }}').load();
-            // });
+            $('#reload').on('click', function() {
+                $('#filterData').val('');
+                datatable.ajax.url('{{ route('program-kerja-jemaat.index') }}').load();
+            });
 
         });
 
@@ -219,11 +250,11 @@
 
         $('#btnPrint').on('click', function() {
             datatable.button('.buttons-print').trigger();
-        })
+        });
 
         async function hapus(id) {
             Swal.fire({
-                title: 'Hapus Data ID ' + id + '?',
+                title: 'Hapus Data?',
                 text: 'Data akan dihapus permanen!',
                 icon: 'warning',
                 showCancelButton: true,
@@ -235,22 +266,21 @@
                 if (result.isConfirmed) {
                     var csrfToken = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: '/pengurus-klasis/destroy/' + id,
+                        url: '/program-kerja-jemaat/destroy/' + id,
                         type: 'DELETE',
                         data: {
                             _token: csrfToken
                         },
                         success: function(response) {
+                            console.log('Response:', response);
                             if (response.status) {
-                                Swal.fire({
-                                    title: 'Terhapus!',
-                                    text: 'Data berhasil dihapus.',
-                                    icon: 'success',
-                                    // timer: 500,
-                                    timerProgressBar: true,
-                                }).then(() => {
-                                    $('#datatable').DataTable().ajax.reload();
-                                });
+                                Swal.fire(
+                                    'Terhapus!',
+                                    'Data berhasil dihapus.',
+                                    'success'
+                                );
+                                $('#datatable').DataTable().ajax.reload();
+
                             } else {
                                 Swal.fire(
                                     'Error!',

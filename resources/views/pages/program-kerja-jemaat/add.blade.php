@@ -3,73 +3,73 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title mt-0" id="myModalLabel">Tambah Data </h5>
-                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-                <button type="button" class="btn-close" onclick="closeModalAdd()">
-                </button>
+                <button type="button" class="btn-close" onclick="closeModalAdd()"> </button>
             </div>
             <div class="modal-body">
                 <form id="addForm">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="id_jemaat">Jemaat</label>
-                                <select class="form-control form-select" id="id_jemaat" name="id_jemaat">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="id_jemaat">Jemaat</label>
+                            <select class="form-select" id="id_jemaat" name="id_jemaat">
 
-                                </select>
-                                <div class="invalid-feedback"></div>
+                            </select>
+                            <div class="invalid-feedback">
+
                             </div>
                         </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="bidang">Bidang</label>
+                            <select class="form-select" id="bidang" name="bidang">
+                                <option value="" selected disabled>Pilih bidang</option>
+                                <option value="Teologia">Teologia</option>
+                                <option value="Pembinaan">Pembinaan</option>
+                                <option value="Sosial Diokonia dan Dana">Sosial Diokonia dan Dana</option>
+                            </select>
+                            <div class="invalid-feedback">
 
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="nama_pengurus">Bidang</label>
-                                <select class="form-select" id="bidang" name="bidang">
-                                    <option value="" selected disabled>Pilih bidang</option>
-                                    <option value="Teologi/Kurikulum">Teologi/Kurikulum</option>
-                                    <option value="Kreatif/Pembinaan">Kreatif/Pembinaan</option>
-                                    <option value="Dana/Diakonia">Dana/Diakonia</option>
-                                </select>
-
-                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
-                    <!-- end row -->
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="nama_pengurus">Nama</label>
-                                <input type="text" class="form-control" id="nama" name="nama"
-                                    placeholder="Nama">
-                                <div class="invalid-feedback"> </div>
+                                <label class="form-label">Tujuan</label>
+                                <textarea class="form-control" placeholder="Tujuan" rows="3" name="tujuan" id="tujuan"></textarea>
+                                <div class="invalid-feedback">
+
+                                </div>
                             </div>
                         </div>
-
+                        <!-- end col -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="nama_pengurus">Jabatan</label>
-                                <select class="form-select" id="jabatan" name="jabatan">
-                                    <option value="" selected disabled>Pilih Jabatan</option>
-                                    <option value="Ketua Umum">Ketua Umum</option>
-                                    <option value="Ketua 1">Ketua 1</option>
-                                    <option value="Ketua 2">Ketua 2</option>
-                                    <option value="Ketua 3">Ketua 3</option>
-                                    <option value="Sekretaris">Sekretaris</option>
-                                    <option value="Wakil Sekretaris">Wakil Sekretaris</option>
-                                    <option value="Bendahara">Bendahara</option>
-                                    <hr class="my-2">
-                                    {{-- <option value="Koordinator">Koordinator</option> --}}
-                                    <option value="Anggota">Anggota</option>
-                                </select>
-                                <div class="invalid-feedback"> </div>
+                                <label class="form-label" for="waktu">Waktu</label>
+                                <input type="text" class="form-control" id="waktu" name="waktu"
+                                    placeholder="Waktu">
+                                <div class="invalid-feedback">
+
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="tempat">Tempat</label>
+                                <input type="text" class="form-control" id="tempat" name="tempat"
+                                    placeholder="Tempat">
+                                <div class="invalid-feedback">
 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                    </div>
                     <!-- end row -->
                     <div class="float-end">
-                        <button type="button" class="btn btn-light waves-effect mx-2"
-                            data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-light waves-effect mr-2"
+                            onclick="closeModalAdd()">Batal</button>
                         <button class="btn btn-primary  " type="submit">Simpan</button>
                     </div>
                 </form>
@@ -86,6 +86,7 @@
             $('#id_jemaat').select2({
                 theme: "bootstrap-5",
                 placeholder: "Pilih Jemaat",
+                // minimumInputLength: 1,
                 dropdownParent: $('#addModal'),
                 ajax: {
                     url: '/jemaat/getAllJemaat',
@@ -126,7 +127,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/pengurus-jemaat/store', {
+                const response = await fetch('/program-kerja-jemaat/store', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -177,13 +178,9 @@
                         }
                     });
 
-                    const form = document.getElementById('addForm');
-                    form.reset();
                     $('#datatable').DataTable().ajax.reload();
                     $('#addModal').modal('hide');
-
                 }
-
 
             } catch (error) {
                 console.error(error);

@@ -22,7 +22,7 @@
 @endpush
 
 @section('page_title')
-    Data Pengurus
+    Data Pengurus Par Jemaat
 @endsection
 
 @section('content')

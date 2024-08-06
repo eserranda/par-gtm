@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PengurusJemaat;
+use App\Models\ProgramKerjaJemaat;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class PengurusJemaatController extends Controller
+class ProgramKerjaJemaatController extends Controller
 {
-
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $dataFilter = $request->input('filter');
 
-            $query = PengurusJemaat::query();
+            $query = ProgramKerjaJemaat::query();
             if ($dataFilter) {
                 $query->where('bidang', $dataFilter);
             }
@@ -23,6 +22,13 @@ class PengurusJemaatController extends Controller
             $data = $query->latest('created_at')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('id_jemaat', function ($row) {
+                    if ($row->id_jemaat) {
+                        return $row->jemaat->nama_jemaat;
+                    } else {
+                        return '-';
+                    }
+                })
                 ->addColumn('action', function ($row) {
                     $btn = '<div class="d-flex justify-content-start align-items-center">';
                     $btn .= '<a class="btn btn-outline-secondary btn-sm mx-1" title="Edit" onclick="edit(' . $row->id . ')"> <i class="fas fa-pencil-alt"></i> </a>';
@@ -33,74 +39,76 @@ class PengurusJemaatController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages.pengurus-jemaat.index');
+
+        return view('pages.program-kerja-jemaat.index');
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'id_jemaat' => 'required',
-            'nama' => 'required',
             'bidang' => 'required',
         ], [
-            'required' => ':attribute harus diisi',
+            'id_jemaat.required' => 'jemaat harus diisi',
+            'bidang.required' => 'Bidang harus diisi',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'messages' => $validator->errors(),
+                'messages' => $validator->errors()
             ], 422);
         }
-        $save = PengurusJemaat::create($request->all());
+
+        $save = ProgramKerjaJemaat::make($request->all());
+        $save->save();
+
         if ($save) {
             return response()->json([
-                'success' => true,
-                'messages' => 'Data berhasil disimpan'
-            ], 200);
+                'success' => true
+            ], 201);
         } else {
             return response()->json([
-                'success' => false,
-                'messages' => 'Data gagal disimpan'
+                'success' => false
             ], 500);
         }
     }
 
     public function findById($id)
     {
-        $data = PengurusJemaat::find($id);
+        $data = ProgramKerjaJemaat::find($id);
         return response()->json($data);
     }
 
-    public function update(Request $request, PengurusJemaat $pengurusJemaat)
+    public function update(Request $request, ProgramKerjaJemaat $ProgramKerjaJemaat)
     {
         $validator = Validator::make($request->all(), [
             'edit_id_jemaat' => 'required',
-            'edit_nama' => 'required',
             'edit_bidang' => 'required',
         ], [
-            'required' => ':attribute harus diisi',
-        ],);
-
+            'id_jemaat.required' => 'jemaat harus diisi',
+            'bidang.required' => 'Bidang harus diisi',
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'messages' => $validator->errors(),
+                'messages' => $validator->errors()
             ], 422);
         }
 
-        $update = $pengurusJemaat->where('id', $request->input('id'))->update([
-            'id_jemaat' => $request->input('edit_id_jemaat'),
-            'nama' => $request->input('edit_nama'),
-            'bidang' => $request->input('edit_bidang'),
-            'jabatan' => $request->input('edit_jabatan'),
+        $update = $ProgramKerjaJemaat::find($request->id)->update([
+            'id_jemaat' => $request->edit_id_jemaat,
+            'bidang' => $request->edit_bidang,
+            'tujuan' => $request->edit_tujuan,
+            'waktu' => $request->edit_waktu,
+            'tempat' => $request->edit_tempat,
         ]);
 
         if ($update) {
             return response()->json([
                 'success' => true
-            ], 200);
+            ], 201);
         } else {
             return response()->json([
                 'success' => false
@@ -111,10 +119,10 @@ class PengurusJemaatController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PengurusJemaat $pengurusJemaat, $id)
+    public function destroy(ProgramKerjaJemaat $ProgramKerjaJemaat, $id)
     {
         try {
-            $deleted = $pengurusJemaat::findOrFail($id);
+            $deleted = $ProgramKerjaJemaat::findOrFail($id);
             $deleted->delete();
 
             return response()->json(['status' => true, 'message' => 'Data berhasil dihapus'], 200);

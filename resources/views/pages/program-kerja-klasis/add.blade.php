@@ -21,8 +21,8 @@
                             <label class="form-label" for="bidang">Bidang</label>
                             <select class="form-select" id="bidang" name="bidang">
                                 <option value="" selected disabled>Pilih bidang</option>
-                                <option value="Teologia Dan Kurikulum">Teologia Dan Kurikulum</option>Z
-                                <option value="Pemberdayaan dan Pelatihan">Pemberdayaan dan Pelatihan</option>Z
+                                <option value="Teologia Dan Kurikulum">Teologia Dan Kurikulum</option>
+                                <option value="Pemberdayaan dan Pelatihan">Pemberdayaan dan Pelatihan</option>
                                 <option value="Diokonia dan Dana">Diokonia dan Dana</option>
                             </select>
                             <div class="invalid-feedback">
@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="tempat">Temapat</label>
+                                <label class="form-label" for="tempat">Tempat</label>
                                 <input type="text" class="form-control" id="tempat" name="tempat"
                                     placeholder="Tempat">
                                 <div class="invalid-feedback">
