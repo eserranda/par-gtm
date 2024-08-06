@@ -31,10 +31,12 @@
                                 <i class="mdi mdi-microsoft-excel"></i></button>
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
-                                data-bs-target="#addModal">Tambah Data</button>
-                        </div>
+                        @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-primary waves-effect waves-light"
+                                    data-bs-toggle="modal" data-bs-target="#addModal">Tambah Data</button>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="table-responsive">
@@ -47,7 +49,9 @@
                                     <th>Waktu</th>
                                     <th>Tempat</th>
                                     <th>Pelaksana</th>
-                                    <th>Action</th>
+                                    @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
+                                        <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
 
@@ -162,12 +166,14 @@
                         name: 'sasaran_belanja',
                         orderable: false,
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
+                    @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+                    @endif
                 ],
             });
 
