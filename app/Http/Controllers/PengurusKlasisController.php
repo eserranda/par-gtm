@@ -41,7 +41,6 @@ class PengurusKlasisController extends Controller
         $validator = Validator::make($request->all(), [
             'id_klasis' => 'required',
             'nama' => 'required',
-            'bidang' => 'required',
         ], [
             'required' => ':attribute harus diisi',
         ]);
@@ -78,7 +77,6 @@ class PengurusKlasisController extends Controller
         $validator = Validator::make($request->all(), [
             'edit_id_klasis' => 'required',
             'edit_nama' => 'required',
-            'edit_bidang' => 'required',
         ], [
             'required' => ':attribute harus diisi',
         ],);
