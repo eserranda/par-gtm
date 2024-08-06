@@ -163,10 +163,23 @@
                     <div class="card">
                         <div class="card-body">
                             <h3 class="card-title">Visi</h3>
-                            <p class="card-text">
-                                Menjadi komunitas yang mengasihi dan melayani, membawa anak-anak dan remaja lebih dekat
-                                kepada Tuhan.
-                            </p>
+                            <ul class="card-text">
+                                <li>
+                                    Melayani anak dan remaja untuk menanamkan nilai-nilai iman Kristen berdasarkan
+                                    Alkitab
+                                </li>
+                                <li>
+                                    Memperlengkapi anak dan remaja agar menerima dan menghayati panggilan Allah sehingga
+                                    mengaku “YESUS KRISTUS ITULAH TUHAN DAN JURUSELAMAT”.
+                                </li>
+                                <li>
+                                    Mendidik Anak dan remaja agar menjadi generasi yang takut akan Tuhan
+                                </li>
+                                <li>
+                                    Memperlengkapi warga gereja yang dipanggil dan diutus bagi pekerjaan pelayanan PAR
+                                    GTM.
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
