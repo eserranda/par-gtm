@@ -55,7 +55,7 @@
     </div>
 
     @include('pages.users.add')
-    {{-- @include('pages.users.edit') --}}
+    @include('pages.users.edit')
 @endsection
 
 
@@ -89,12 +89,10 @@
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_nama_kegiatan').value = data.nama_kegiatan;
-                    document.getElementById('edit_waktu_dan_tempat').value = data.waktu_dan_tempat;
-                    document.getElementById('edit_tujuan').value = data.tujuan;
-                    document.getElementById('edit_sasaran_belanja').value = data.sasaran_belanja;
-                    document.getElementById('edit_sumber_biaya').value = data.sumber_biaya;
-                    document.getElementById('edit_penanggung_jawab').value = data.penanggung_jawab;
+                    document.getElementById('edit_name').value = data.name;
+                    document.getElementById('edit_username').value = data.username;
+                    document.getElementById('edit_email').value = data.email;
+                    // document.getElementById('edit_roles').value = data.roles;
                 })
                 .catch(error => console.error(error));
             // show modal edit

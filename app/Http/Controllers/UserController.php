@@ -34,6 +34,12 @@ class UserController extends Controller
         return view('pages.users.index');
     }
 
+    public function findById($id)
+    {
+        $data = User::find($id);
+        return response()->json($data);
+    }
+
     public function showRegistrationForm()
     {
         return view('auth.register');
@@ -93,6 +99,56 @@ class UserController extends Controller
     {
         Auth::logout();
         return redirect()->route('login');
+    }
+
+    public function update(Request $request)
+    {
+        $id = $request->id;
+        $validator = Validator::make($request->all(), [
+            'edit_name' => 'required|string|max:255',
+            'edit_username' => 'required|string|max:255|unique:users,username,' . $id,
+            'edit_email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'edit_roles' => 'required|array',
+            'edit_roles.*' => 'exists:roles,name',
+        ], [
+            'edit_name.required' => 'Nama Tidak Boleh Kosong',
+            'edit_username.required' => 'Username Tidak Boleh Kosong',
+            'edit_email.required' => 'Email Tidak Boleh Kosong',
+            'edit_roles.required' => 'Role Tidak Boleh Kosong',
+            'edit_roles.*.exists' => 'Role Tidak Valid',
+            'edit_username.unique' => 'Username Sudah Digunakan',
+            'edit_email.unique' => 'Email Sudah Digunakan',
+            'edit_email.email' => 'Email Tidak Valid',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'messages' => $validator->errors()
+            ], 422);
+        }
+
+        $update = User::where('id', $id)->update([
+            'name' => $request->edit_name,
+            'username' => $request->edit_username,
+            'email' => $request->edit_email,
+        ]);
+
+        $user = User::find($id);
+        $user->roles()->sync(Role::whereIn('name', $request->edit_roles)->get());
+
+
+        if ($update) {
+            return response()->json([
+                'success' => true,
+                'messages' => 'Program berhasil diubah'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'messages' => 'Program gagal diubah'
+            ], 409);
+        }
     }
 
     public function destroy(User $users, $id)
