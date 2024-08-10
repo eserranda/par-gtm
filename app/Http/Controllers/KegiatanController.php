@@ -92,6 +92,7 @@ class KegiatanController extends Controller
             'waktu' => $request->input('edit_waktu'),
             'tempat' => $request->input('edit_tempat'),
             'pelaksana' => $request->input('edit_pelaksana'),
+            'keterangan' => $request->input('edit_keterangan'),
         ]);
 
         if ($update) {

@@ -52,6 +52,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <!-- end col -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="pelaksana">Keterangan</label>
+                                <textarea class="form-control" id="edit_keterangan" name="edit_keterangan" rows="3"
+                                    placeholder="Keterangan Kegiatan"></textarea>
+                                <div class="invalid-feedback"> </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- end row -->
                     <div class="float-end">
                         <button type="button" class="btn btn-light waves-effect mx-2"

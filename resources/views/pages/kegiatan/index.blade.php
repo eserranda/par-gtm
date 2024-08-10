@@ -49,6 +49,7 @@
                                     <th>Waktu</th>
                                     <th>Tempat</th>
                                     <th>Pelaksana</th>
+                                    <th>Keterangan</th>
                                     @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
                                         <th>Action</th>
                                     @endif
@@ -103,6 +104,7 @@
                     document.getElementById('edit_waktu').value = data.waktu;
                     document.getElementById('edit_tempat').value = data.tempat;
                     document.getElementById('edit_pelaksana').value = data.pelaksana;
+                    document.getElementById('edit_keterangan').value = data.keterangan;
                 })
                 .catch(error => console.error(error));
             // show modal edit
@@ -163,7 +165,12 @@
                     },
                     {
                         data: 'pelaksana',
-                        name: 'sasaran_belanja',
+                        name: 'pelaksana',
+                        orderable: false,
+                    },
+                    {
+                        data: 'keterangan',
+                        name: 'keterangan',
                         orderable: false,
                     },
                     @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
