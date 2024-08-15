@@ -1,17 +1,18 @@
-<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="editModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="myModalLabel">Tambah Data </h5>
-                <button type="button" class="btn-close" onclick="closeModalAdd()"></button>
+                <h5 class="modal-title mt-0" id="myModalLabel">edit Data </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addForm">
+                <form id="editForm">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="name">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="name" name="name"
+                                <input type="hidden" class="form-control" id="edit_id" name="id">
+                                <input type="text" class="form-control" id="edit_name" name="edit_name"
                                     placeholder="Nama Lengkap">
                                 <div class="invalid-feedback">
 
@@ -22,7 +23,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username"
+                                <input type="text" class="form-control" id="edit_username" name="edit_username"
                                     placeholder="Username">
                                 <div class="invalid-feedback">
 
@@ -35,8 +36,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="password">Password</label>
-                                <input type="text" class="form-control" id="password" name="password"
-                                    placeholder="Password">
+                                <input type="text" class="form-control" id="password" name="password" readonly>
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -47,7 +47,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="password_confirmation">Ulangi Password</label>
                                 <input type="text" class="form-control" id="password_confirmation"
-                                    name="password_confirmation" placeholder="Confirm Password">
+                                    name="password_confirmation" readonly>
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -59,7 +59,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="email">Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
+                                <input type="text" class="form-control" id="edit_email" name="edit_email"
                                     placeholder="Email">
                                 <div class="invalid-feedback">
 
@@ -70,7 +70,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="role">Role</label>
-                                <select class="form-control" name="roles[]" multiple>
+                                <select class="form-control" name="edit_roles[]" multiple>
                                     @foreach (App\Models\Role::all() as $role)
                                         <option value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endforeach
@@ -85,7 +85,7 @@
                     <!-- end row -->
                     <div class="float-end mt-2">
                         <button type="button" class="btn btn-light waves-effect mx-2"
-                            onclick="closeModalAdd()">Batal</button>
+                            data-bs-dismiss="modal">Batal</button>
                         <button class="btn btn-primary  " type="submit">Simpan</button>
                     </div>
                 </form>
@@ -97,24 +97,7 @@
 
 @push('scripts')
     <script>
-        function closeModalAdd() {
-            const invalidInputs = document.querySelectorAll('.is-invalid');
-            invalidInputs.forEach(invalidInput => {
-                invalidInput.value = '';
-                invalidInput.classList.remove('is-invalid');
-                const errorNextSibling = invalidInput.nextElementSibling;
-                if (errorNextSibling && errorNextSibling.classList.contains(
-                        'invalid-feedback')) {
-                    errorNextSibling.textContent = '';
-                }
-            });
-
-            const form = document.getElementById('addForm');
-            form.reset();
-            $('#addModal').modal('hide');
-        }
-
-        document.getElementById('addForm').addEventListener('submit', async (event) => {
+        document.getElementById('editForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const form = event.target;
@@ -122,7 +105,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/users/register', {
+                const response = await fetch('/users/update', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -170,7 +153,7 @@
                     });
 
                     $('#datatable').DataTable().ajax.reload();
-                    $('#addModal').modal('hide');
+                    $('#editModal').modal('hide');
                 }
 
 

@@ -13,10 +13,17 @@
 
     <!-- Sweet Alert-->
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Select2 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 @endpush
 
 @section('page_title')
-    Users
+    Data Users Jemaat
 @endsection
 @section('content')
     <div class="row">
@@ -24,7 +31,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="header-title"><b>Data Users</b></h5>
+                        <h5 class="header-title"><b>Data Users Jemaat</b></h5>
                         <div>
                             <button type="button" class="btn btn-info waves-effect" id="btnPrint">Print</button>
                             <button type="button" class="btn btn-success waves-effect" id ="btnExcel">Excel</button>
@@ -54,8 +61,8 @@
         </div>
     </div>
 
-    @include('pages.users.add')
-    @include('pages.users.edit')
+    @include('pages.users-jemaat.add')
+    @include('pages.users-jemaat.edit')
 @endsection
 
 
@@ -82,22 +89,23 @@
 
     <!-- Sweet alert init js-->
     <script src="{{ asset('assets') }}/js/pages/sweet-alerts.init.js"></script>
-
+    <!-- Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
-        function edit(id) {
-            fetch('/users/findById/' + id)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_name').value = data.name;
-                    document.getElementById('edit_username').value = data.username;
-                    document.getElementById('edit_email').value = data.email;
-                    // document.getElementById('edit_roles').value = data.roles;
-                })
-                .catch(error => console.error(error));
-            // show modal edit
-            $('#editModal').modal('show');
-        }
+        // function edit(id) {
+        //     fetch('/users/findById/' + id)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('edit_id').value = data.id;
+        //             document.getElementById('edit_name').value = data.name;
+        //             document.getElementById('edit_username').value = data.username;
+        //             document.getElementById('edit_email').value = data.email;
+        //             // document.getElementById('edit_roles').value = data.roles;
+        //         })
+        //         .catch(error => console.error(error));
+        //     // show modal edit
+        //     $('#editModal').modal('show');
+        // }
 
         async function hapus(id) {
             Swal.fire({
@@ -179,7 +187,7 @@
                         }
                     },
                 ],
-                ajax: "{{ route('users.index') }}",
+                ajax: "{{ route('users-jemaat.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: '#',

@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @push('header_comp')
     <!-- DataTables -->
     <link href="{{ asset('assets') }}/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
@@ -13,18 +12,26 @@
 
     <!-- Sweet Alert-->
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Select2 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 @endpush
 
 @section('page_title')
-    Users
+    Data Anggota PAR
 @endsection
+
 @section('content')
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="header-title"><b>Data Users</b></h5>
+                        <h5 class="header-title"><b>Data Anggota PAR Jemaat</b></h5>
                         <div>
                             <button type="button" class="btn btn-info waves-effect" id="btnPrint">Print</button>
                             <button type="button" class="btn btn-success waves-effect" id ="btnExcel">Excel</button>
@@ -38,9 +45,9 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Role</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Kelas</th>
+                                <th>Alamat</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -48,16 +55,14 @@
 
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
 
-    @include('pages.users.add')
-    @include('pages.users.edit')
+    @include('pages.anggota-jemaat.add')
+    @include('pages.anggota-jemaat.edit')
 @endsection
-
 
 @push('scripts')
     <!-- Required datatable js -->
@@ -76,81 +81,66 @@
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
+
     <!-- SweetAlert2 -->
-    <!-- Sweet Alerts js -->
     <script src="{{ asset('assets') }}/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <!-- Sweet alert init js-->
     <script src="{{ asset('assets') }}/js/pages/sweet-alerts.init.js"></script>
 
+    <!-- Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
-        function edit(id) {
-            fetch('/users/findById/' + id)
+        async function edit(id) {
+            fetch('/anggota-jemaat/findById/' + id)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('edit_id').value = data.id;
-                    document.getElementById('edit_name').value = data.name;
-                    document.getElementById('edit_username').value = data.username;
-                    document.getElementById('edit_email').value = data.email;
-                    // document.getElementById('edit_roles').value = data.roles;
+                    document.getElementById('edit_id_jemaat').value = data.id_jemaat;
+                    document.getElementById('edit_nama').value = data.nama;
+                    document.getElementById('edit_tgl_lahir').value = data.tgl_lahir;
+                    document.getElementById('edit_kelas').value = data.kelas;
+                    document.getElementById('edit_alamat').value = data.alamat;
+
+                    var editIdJemaat = document.getElementById('edit_id_jemaat');
+
+                    fetch('/jemaat/findOne/' + data.id_jemaat, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Gagal mengambil data');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            updateOptionsAndSelect2(editIdJemaat, data.id, data.nama_jemaat);
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
                 })
                 .catch(error => console.error(error));
             // show modal edit
             $('#editModal').modal('show');
         }
 
-        async function hapus(id) {
-            Swal.fire({
-                title: 'Hapus Data?',
-                text: 'Data akan dihapus permanen!',
-                icon: 'warning',
-                showCancelButton: true,
-                cancelButtonText: 'Batal',
-                confirmButtonColor: '#D85F47',
-                cancelButtonColor: '#47D89C',
-                confirmButtonText: 'Ya, hapus!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    $.ajax({
-                        url: '/users/destroy/' + id,
-                        type: 'DELETE',
-                        data: {
-                            _token: csrfToken
-                        },
-                        success: function(response) {
-                            console.log('Response:', response);
-                            if (response.status) {
-                                Swal.fire(
-                                    'Terhapus!',
-                                    'Data berhasil dihapus.',
-                                    'success'
-                                );
-                                $('#datatable').DataTable().ajax.reload();
+        function updateOptionsAndSelect2(selectElement, id, name) {
+            // Hapus semua opsi yang ada di elemen <select>
+            $(selectElement).empty();
 
-                            } else {
-                                Swal.fire(
-                                    'Error!',
-                                    'Data gagal dihapus.',
-                                    'error'
-                                );
-                            }
-                        },
-                        error: function(error) {
-                            console.log(error);
-                            Swal.fire(
-                                'Gagal!',
-                                'Terjadi kesalahan saat menghapus data.',
-                                'error'
-                            );
-                        }
-                    });
-                }
-            });
+            // Tambahkan opsi baru ke elemen <select>
+            var option = new Option(name, id, true, true);
+            $(selectElement).append(option);
+
+            // Perbarui tampilan Select2
+            $(selectElement).trigger('change');
         }
 
         var datatable;
         $(document).ready(function() {
+            const selectedFilter = $('#filterData').val();
             datatable = $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -179,7 +169,7 @@
                         }
                     },
                 ],
-                ajax: "{{ route('users.index') }}",
+                ajax: "{{ route('anggota-jemaat.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: '#',
@@ -187,26 +177,25 @@
 
                     },
                     {
-                        data: 'name',
-                        name: 'name',
+                        data: 'nama',
+                        name: 'nama',
                         orderable: false,
                     },
                     {
-                        data: 'username',
-                        name: 'username',
+                        data: 'tgl_lahir',
+                        name: 'tgl_lahir',
                         orderable: false,
                     },
                     {
-                        data: 'email',
-                        name: 'email',
+                        data: 'kelas',
+                        name: 'kelas',
                         orderable: false,
                     },
                     {
-                        data: 'role',
-                        name: 'role',
+                        data: 'alamat',
+                        name: 'alamat',
                         orderable: false,
                     },
-
                     {
                         data: 'action',
                         name: 'action',
@@ -215,6 +204,19 @@
                     },
                 ],
             });
+
+            // $('#filterData').on('change', function() {
+            //     const selectedFilter = $(this).val();
+            //     datatable.ajax.url('{{ route('anggaran-belanja.index') }}?jenis_anggaran=' +
+            //             selectedFilter)
+            //         .load();
+            // });
+
+            // $('#reload').on('click', function() {
+            //     $('#filterData').val('');
+            //     datatable.ajax.url('{{ route('anggaran-belanja.index') }}').load();
+            // });
+
         });
 
         $('#btnExcel').on('click', function() {
@@ -223,6 +225,57 @@
 
         $('#btnPrint').on('click', function() {
             datatable.button('.buttons-print').trigger();
-        });
+        })
+
+        async function hapus(id) {
+            Swal.fire({
+                title: 'Hapus Data ID ' + id + '?',
+                text: 'Data akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#D85F47',
+                cancelButtonColor: '#47D89C',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                    $.ajax({
+                        url: '/anggota-jemaat/destroy/' + id,
+                        type: 'DELETE',
+                        data: {
+                            _token: csrfToken
+                        },
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    title: 'Terhapus!',
+                                    text: 'Data berhasil dihapus.',
+                                    icon: 'success',
+                                    // timer: 500,
+                                    timerProgressBar: true,
+                                }).then(() => {
+                                    $('#datatable').DataTable().ajax.reload();
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'Data gagal dihapus.',
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                            Swal.fire(
+                                'Gagal!',
+                                'Terjadi kesalahan saat menghapus data.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        }
     </script>
 @endpush

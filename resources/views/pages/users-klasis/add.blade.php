@@ -8,7 +8,17 @@
             <div class="modal-body">
                 <form id="addForm">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="id_klasis">Klasis</label>
+                            <select class="form-select" id="id_klasis" name="id_klasis">
+
+                            </select>
+                            <div class="invalid-feedback">
+
+                            </div>
+                        </div>
+
+                        {{-- <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="name">Nama Lengkap</label>
                                 <input type="text" class="form-control" id="name" name="name"
@@ -17,11 +27,13 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- end col -->
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="username">Username</label>
+                                <input type="hidden" class="form-control" id="name" name="name">
                                 <input type="text" class="form-control" id="username" name="username"
                                     placeholder="Username">
                                 <div class="invalid-feedback">
@@ -29,9 +41,12 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="row">
+
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="password">Password</label>
@@ -43,6 +58,7 @@
                             </div>
                         </div>
                         <!-- end col -->
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="password_confirmation">Ulangi Password</label>
@@ -53,28 +69,17 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="row">
+
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="email">Email</label>
                                 <input type="text" class="form-control" id="email" name="email"
                                     placeholder="Email">
-                                <div class="invalid-feedback">
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="role">Role</label>
-                                <select class="form-control" name="roles[]" multiple>
-                                    @foreach (App\Models\Role::all() as $role)
-                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                    @endforeach
-                                </select>
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -114,6 +119,31 @@
             $('#addModal').modal('hide');
         }
 
+        $(document).ready(function() {
+            $('#id_klasis').select2({
+                theme: "bootstrap-5",
+                placeholder: "Pilih Klasis",
+                // minimumInputLength: 1,
+                dropdownParent: $('#addModal'),
+                ajax: {
+                    url: '/klasis/getAllKlasis',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            $('#id_klasis').on('select2:select', function(e) {
+                var selectedData = e.params.data;
+                $('#name').val(selectedData.text); // Mengisi input "nama" dengan "nama_klasis"
+            });
+        });
+
         document.getElementById('addForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -122,7 +152,7 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             try {
-                const response = await fetch('/users/register', {
+                const response = await fetch('/users-klasis/register', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -136,7 +166,9 @@
                 if (!data.success) {
                     Object.keys(data.messages).forEach(fieldName => {
                         const inputField = document.getElementById(fieldName);
-                        if (inputField) {
+                        if (inputField && fieldName == 'id_klasis') {
+                            inputField.classList.add('is-invalid');
+                        } else {
                             inputField.classList.add('is-invalid');
                             if (inputField.nextElementSibling) {
                                 inputField.nextElementSibling.textContent = data.messages[
@@ -150,8 +182,10 @@
                     validFields.forEach(validField => {
                         const fieldName = validField.id;
                         if (!data.messages[fieldName]) {
-                            validField.classList.remove('is-invalid');
-                            if (validField.nextElementSibling) {
+                            if (fieldName === 'id_klasis') {
+                                validField.classList.remove('is-invalid');
+                            } else {
+                                validField.classList.remove('is-invalid');
                                 validField.nextElementSibling.textContent = '';
                             }
                         }

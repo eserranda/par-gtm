@@ -13,9 +13,12 @@ use App\Http\Controllers\BidangTigaController;
 use App\Http\Controllers\PengurusJemaatController;
 use App\Http\Controllers\PengurusKlasisController;
 use App\Http\Controllers\AnggaranBelanjaController;
+use App\Http\Controllers\AnggotaJemaatController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProgramKerjaJemaatController;
 use App\Http\Controllers\ProgramKerjaKlasisController;
+use App\Http\Controllers\UserJemaatController;
+use App\Http\Controllers\UserKlasisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +49,16 @@ Route::prefix('dashboard')->controller(DashboardController::class)->group(functi
     Route::get('/', 'index')->name('dashboard.index')->middleware('auth');
 });
 
+
+Route::prefix('anggota-jemaat')->controller(AnggotaJemaatController::class)->group(function () {
+    Route::get('/', 'index')->name('anggota-jemaat.index');
+    Route::post('/store', 'store');
+    Route::get('/findById/{id}', 'findById');
+    Route::post('/update', 'update');
+    Route::delete('/destroy/{id}', 'destroy');
+})->middleware('auth');
+
+
 Route::prefix('jemaat')->controller(JemaatController::class)->group(function () {
     Route::get('/', 'index')->name('jemaat.index')->middleware('auth');
     Route::get('/create', 'create');
@@ -56,7 +69,7 @@ Route::prefix('jemaat')->controller(JemaatController::class)->group(function () 
     Route::get('/getIdAndNameAllKlasis', 'getIdAndNameAllKlasis');
     Route::get('/getAllJemaat', 'getAllJemaat');
     Route::get('/findOne/{id}', 'findOne');
-});
+})->middleware('auth');
 
 Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
     Route::get('/', 'index')->name('kegiatan.index')->middleware('auth');
@@ -65,7 +78,7 @@ Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function
     Route::post('/store', 'store');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
-});
+})->middleware('auth');
 
 Route::prefix('program-kerja-jemaat')->controller(ProgramKerjaJemaatController::class)->group(function () {
     Route::get('/', 'index')->name('program-kerja-jemaat.index')->middleware('auth');
@@ -74,7 +87,7 @@ Route::prefix('program-kerja-jemaat')->controller(ProgramKerjaJemaatController::
     Route::post('/store', 'store');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
-});
+})->middleware('auth');
 
 Route::prefix('program-kerja-klasis')->controller(ProgramKerjaKlasisController::class)->group(function () {
     Route::get('/', 'index')->name('program-kerja-klasis.index')->middleware('auth');
@@ -83,7 +96,7 @@ Route::prefix('program-kerja-klasis')->controller(ProgramKerjaKlasisController::
     Route::post('/store', 'store');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
-});
+})->middleware('auth');
 
 Route::prefix('klasis')->controller(KlasisController::class)->group(function () {
     Route::get('/', 'index')->name('klasis.index')->middleware('auth');
@@ -95,11 +108,27 @@ Route::prefix('klasis')->controller(KlasisController::class)->group(function () 
     Route::get('/getAllKlasis', 'getAllKlasis');
     // Route::get('/getIdAndNameAllKlasis', 'getIdAndNameAllKlasis');
     Route::get('/findOne/{id}', 'findOne');
-});
+})->middleware('auth');
 
 Route::prefix('roles')->controller(RoleController::class)->group(function () {
     Route::get('/', 'index')->name('roles.index')->middleware('role:super_admin');
     Route::post('/store', 'store');
+    Route::get('/findById/{id}', 'findById');
+    Route::post('/update', 'update');
+    Route::delete('/destroy/{id}', 'destroy');
+})->middleware('auth');
+
+Route::prefix('users-jemaat')->controller(UserJemaatController::class)->group(function () {
+    Route::get('/', 'index')->name('users-jemaat.index');
+    Route::post('/register', 'register');
+    Route::get('/findById/{id}', 'findById');
+    Route::post('/update', 'update');
+    Route::delete('/destroy/{id}', 'destroy');
+})->middleware('auth');
+
+Route::prefix('users-klasis')->controller(UserKlasisController::class)->group(function () {
+    Route::get('/', 'index')->name('users-klasis.index');
+    Route::post('/register', 'register');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
