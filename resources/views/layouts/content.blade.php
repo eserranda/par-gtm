@@ -20,12 +20,18 @@
 
                 <div class="col-sm-6">
                     <div class="d-flex justify-content-end align-items-end mb-3">
-                        <p class="font-size-15">Selamat Datang, <span class="fw-bold"> {{ Auth::user()->name }}</span>,
+                        <p class="font-size-15">Selamat Datang, <span class="fw-bold">
+                                {{ Auth::check() && Auth::user()->name }}</span>,
                             anda login sebagai
                             <br>
-                            @foreach (Auth::user()->roles as $role)
+                            @auth
+                                @foreach (Auth::user()->roles as $role)
+                                    <span class="badge bg-warning">{{ $role->name }}</span>
+                                @endforeach
+                            @endauth
+                            {{-- @foreach (Auth::check() && Auth::user()->roles as $role)
                                 <span class="badge bg-warning">{{ $role->name }}</span>
-                            @endforeach
+                            @endforeach --}}
                         </p>
                     </div>
                 </div>

@@ -51,7 +51,7 @@ Route::prefix('dashboard')->controller(DashboardController::class)->group(functi
 
 
 Route::prefix('anggota-jemaat')->controller(AnggotaJemaatController::class)->group(function () {
-    Route::get('/', 'index')->name('anggota-jemaat.index');
+    Route::get('/', 'index')->name('anggota-jemaat.index')->middleware('auth');
     Route::post('/store', 'store');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
@@ -119,7 +119,7 @@ Route::prefix('roles')->controller(RoleController::class)->group(function () {
 })->middleware('auth');
 
 Route::prefix('users-jemaat')->controller(UserJemaatController::class)->group(function () {
-    Route::get('/', 'index')->name('users-jemaat.index');
+    Route::get('/', 'index')->name('users-jemaat.index')->middleware('auth');
     Route::post('/register', 'register');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
@@ -127,7 +127,7 @@ Route::prefix('users-jemaat')->controller(UserJemaatController::class)->group(fu
 })->middleware('auth');
 
 Route::prefix('users-klasis')->controller(UserKlasisController::class)->group(function () {
-    Route::get('/', 'index')->name('users-klasis.index');
+    Route::get('/', 'index')->name('users-klasis.index')->middleware('auth');
     Route::post('/register', 'register');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
@@ -143,7 +143,7 @@ Route::prefix('users')->controller(UserController::class)->group(function () {
 })->middleware('auth');
 
 Route::prefix('anggaran-belanja')->controller(AnggaranBelanjaController::class)->group(function () {
-    Route::get('/', 'index')->name('anggaran-belanja.index');
+    Route::get('/', 'index')->name('anggaran-belanja.index')->middleware('auth');
     Route::post('/store', 'store');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
@@ -153,7 +153,7 @@ Route::prefix('anggaran-belanja')->controller(AnggaranBelanjaController::class)-
 // Route::get('/admin', [AdminController::class, 'index'])->middleware('role:admin,editor');
 
 Route::prefix('pengurus-klasis')->controller(PengurusKlasisController::class)->group(function () {
-    Route::get('/', 'index')->name('pengurus-klasis.index');
+    Route::get('/', 'index')->name('pengurus-klasis.index')->middleware('auth');
     Route::post('/store', 'store');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
@@ -161,7 +161,7 @@ Route::prefix('pengurus-klasis')->controller(PengurusKlasisController::class)->g
 })->middleware('auth');
 
 Route::prefix('pengurus-jemaat')->controller(PengurusJemaatController::class)->group(function () {
-    Route::get('/', 'index')->name('pengurus-jemaat.index');
+    Route::get('/', 'index')->name('pengurus-jemaat.index')->middleware('auth');
     Route::post('/store', 'store');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
@@ -169,7 +169,7 @@ Route::prefix('pengurus-jemaat')->controller(PengurusJemaatController::class)->g
 })->middleware('auth');
 
 Route::prefix('pengurus')->controller(PengurusController::class)->group(function () {
-    Route::get('/', 'index')->name('pengurus.index');
+    Route::get('/', 'index')->name('pengurus.index')->middleware('auth');
     Route::post('/store', 'store');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
@@ -177,7 +177,7 @@ Route::prefix('pengurus')->controller(PengurusController::class)->group(function
 })->middleware('auth');
 
 Route::prefix('bidang-satu')->controller(BidangSatuController::class)->group(function () {
-    Route::get('/', 'index')->name('bidang-satu.index');
+    Route::get('/', 'index')->name('bidang-satu.index')->middleware('auth');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
@@ -185,7 +185,7 @@ Route::prefix('bidang-satu')->controller(BidangSatuController::class)->group(fun
 })->middleware('auth');
 
 Route::prefix('bidang-dua')->controller(BidangDuaController::class)->group(function () {
-    Route::get('/', 'index')->name('bidang-dua.index');
+    Route::get('/', 'index')->name('bidang-dua.index')->middleware('auth');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
@@ -193,7 +193,7 @@ Route::prefix('bidang-dua')->controller(BidangDuaController::class)->group(funct
 })->middleware('auth');
 
 Route::prefix('bidang-tiga')->controller(BidangTigaController::class)->group(function () {
-    Route::get('/', 'index')->name('bidang-tiga.index');
+    Route::get('/', 'index')->name('bidang-tiga.index')->middleware('auth');
     Route::get('/findById/{id}', 'findById');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');

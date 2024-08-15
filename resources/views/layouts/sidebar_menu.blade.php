@@ -16,7 +16,8 @@
                       </a>
                   </li>
 
-                  @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
+                  @if (auth()->check() &&
+                          auth()->user()->hasAnyRole(['super_admin', 'sinode']))
                       <li class="menu-title">Sinode</li>
 
                       <li>
@@ -64,7 +65,8 @@
                       </a>
                   </li>
 
-                  @if (auth()->user()->hasAnyRole(['super_admin', 'klasis']))
+                  @if (auth()->check() &&
+                          auth()->user()->hasAnyRole(['super_admin', 'klasis']))
                       <li class="menu-title">Klasis</li>
 
                       <li>
@@ -81,7 +83,8 @@
                           </a>
                       </li>
                   @endif
-                  @if (auth()->user()->hasAnyRole(['super_admin', 'jemaat']))
+                  @if (auth()->check() &&
+                          auth()->user()->hasAnyRole(['super_admin', 'jemaat']))
                       <li class="menu-title">Jemaat/PAR</li>
 
                       {{-- <li>
@@ -124,7 +127,8 @@
                           <span>Data Jemaat</span>
                       </a>
                   </li> --}}
-                  @if (auth()->user()->hasAnyRole(['super_admin', 'sinode']))
+                  @if (auth()->check() &&
+                          auth()->user()->hasAnyRole(['super_admin', 'sinode']))
                       <li class="menu-title">Authications</li>
                       <li>
                           <a href="javascript: void(0);" class="has-arrow waves-effect">
