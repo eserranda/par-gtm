@@ -62,6 +62,20 @@
                                 <div class="invalid-feedback"> </div>
                             </div>
                         </div>
+
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-lable">Input File Foto</label>
+                                <input type="file" class="filestyle" data-buttonname="btn-secondary"
+                                    name="edit_photo" id="edit_photo" class="form-control">
+                                <div class="invalid-feedback"> </div>
+                            </div>
+                            <div class="mb-3">
+                                <img class="img-thumbnail" id="photoPreview" src="" alt="Photo Preview"
+                                    style="max-width: 200px; max-height: 200px;">
+                            </div>
+                        </div>
                     </div>
                     <!-- end row -->
                     <div class="float-end">
@@ -79,6 +93,17 @@
 
 @push('scripts')
     <script>
+        document.getElementById('photo').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('photoPreview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
         document.getElementById('editForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 

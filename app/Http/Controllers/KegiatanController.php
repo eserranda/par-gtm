@@ -16,6 +16,9 @@ class KegiatanController extends Controller
             $data = Kegiatan::latest('created_at')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->editColumn('image', function ($row) {
+                    return '<img src="' . asset('storage/photos/' . $row->image) . '"   class="avatar-lg rounded" alt="img"> ';
+                })
                 ->addColumn('action', function ($row) {
                     $btn = '<div class="d-flex justify-content-start align-items-center">';
                     $btn .= '<a class="btn btn-outline-secondary btn-sm mx-1" title="Edit" onclick="edit(' . $row->id . ')"> <i class="fas fa-pencil-alt"></i> </a>';
@@ -23,7 +26,7 @@ class KegiatanController extends Controller
                     $btn .= '</div>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'image'])
                 ->make(true);
         }
 
@@ -43,9 +46,11 @@ class KegiatanController extends Controller
         $validator = Validator::make($request->all(), [
             'kegiatan' => 'required',
             'waktu' => 'required',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'required' => ':attribute harus diisi',
         ]);
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -55,7 +60,24 @@ class KegiatanController extends Controller
         }
 
 
-        $save = Kegiatan::create($request->all());
+        // $save = Kegiatan::create($request->all());
+        if ($request->hasFile('photo')) {
+
+            $file = $request->file('photo');
+            // $fileName = time() . '_' . $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $filePath = $file->storeAs('photos', $fileName);
+        }
+
+        $save = Kegiatan::create([
+            'kegiatan' => $request->input('kegiatan'),
+            'waktu' => $request->input('waktu'),
+            'tempat' => $request->input('tempat'),
+            'pelaksana' => $request->input('pelaksana'),
+            'keterangan' => $request->input('keterangan'),
+            'image' => $fileName,
+        ]);
 
         if ($save) {
             return response()->json([
@@ -76,6 +98,7 @@ class KegiatanController extends Controller
         $validator = Validator::make($request->all(), [
             'edit_kegiatan' => 'required',
             'edit_waktu' => 'required',
+            'edit_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'required' => ':attribute harus diisi',
         ]);
@@ -86,6 +109,14 @@ class KegiatanController extends Controller
                 'messages' => $validator->errors()
             ], 422);
         }
+        if ($request->hasFile('edit_photo')) {
+
+            $file = $request->file('edit_photo');
+            // $fileName = time() . '_' . $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $filePath = $file->storeAs('photos', $fileName);
+        }
 
         $update = $kegiatan::findOrFail($request->input('id'))->update([
             'kegiatan' => $request->input('edit_kegiatan'),
@@ -93,6 +124,7 @@ class KegiatanController extends Controller
             'tempat' => $request->input('edit_tempat'),
             'pelaksana' => $request->input('edit_pelaksana'),
             'keterangan' => $request->input('edit_keterangan'),
+            'image' => $fileName,
         ]);
 
         if ($update) {

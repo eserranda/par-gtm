@@ -26,6 +26,7 @@
 <script src="{{ asset('assets') }}/libs/simplebar/simplebar.min.js"></script>
 <script src="{{ asset('assets') }}/libs/node-waves/waves.min.js"></script>
 <script src="{{ asset('assets') }}/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
+<script src="{{ asset('assets') }}/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
 
 <script src="{{ asset('assets') }}/js/app.js"></script>
 

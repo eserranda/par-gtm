@@ -45,6 +45,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Image</th>
                                     <th>Nama Kegiatan</th>
                                     <th>Waktu</th>
                                     <th>Tempat</th>
@@ -87,7 +88,6 @@
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
-    <!-- SweetAlert2 -->
     <!-- Sweet Alerts js -->
     <script src="{{ asset('assets') }}/libs/sweetalert2/sweetalert2.min.js"></script>
 
@@ -105,9 +105,10 @@
                     document.getElementById('edit_tempat').value = data.tempat;
                     document.getElementById('edit_pelaksana').value = data.pelaksana;
                     document.getElementById('edit_keterangan').value = data.keterangan;
+
+                    // photoPreview.src = "{{ asset('storage/photos/edit_image') }}" + '/' + data.image
                 })
                 .catch(error => console.error(error));
-            // show modal edit
             $('#editModal').modal('show');
         }
 
@@ -147,6 +148,11 @@
                         name: '#',
                         orderable: false,
 
+                    },
+                    {
+                        data: 'image',
+                        name: 'image',
+                        orderable: false,
                     },
                     {
                         data: 'kegiatan',

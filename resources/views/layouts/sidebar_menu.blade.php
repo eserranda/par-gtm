@@ -115,7 +115,7 @@
                       </li>
                       <li>
                           <a href="/anggota-jemaat" class="waves-effect">
-                              <i class="mdi mdi-account-edit-outline"></i>
+                              <i class="mdi mdi-book-account-outline"></i>
                               <span>Anggota Par Jemaat</span>
                           </a>
                       </li>

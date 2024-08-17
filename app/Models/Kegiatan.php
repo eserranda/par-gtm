@@ -12,7 +12,8 @@ class Kegiatan extends Model
         'waktu',
         'tempat',
         'pelaksana',
-        'keterangan'
+        'keterangan',
+        'image',
     ];
 
     use HasFactory;
