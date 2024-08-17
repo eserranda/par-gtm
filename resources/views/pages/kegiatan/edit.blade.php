@@ -68,7 +68,7 @@
                             <div class="mb-3">
                                 <label class="form-lable">Input File Foto</label>
                                 <input type="file" class="filestyle" data-buttonname="btn-secondary"
-                                    name="edit_photo" id="edit_photo" class="form-control">
+                                    name="edit_image" id="edit_image" class="form-control">
                                 <div class="invalid-feedback"> </div>
                             </div>
                             <div class="mb-3">
@@ -93,7 +93,7 @@
 
 @push('scripts')
     <script>
-        document.getElementById('photo').addEventListener('change', function(event) {
+        document.getElementById('image').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
