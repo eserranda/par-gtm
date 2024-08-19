@@ -105,6 +105,7 @@
                     document.getElementById('edit_tempat').value = data.tempat;
                     document.getElementById('edit_pelaksana').value = data.pelaksana;
                     document.getElementById('edit_keterangan').value = data.keterangan;
+                    document.getElementById('edit_image').value = data.image;
 
                     // photoPreview.src = "{{ asset('storage/photos/edit_image') }}" + '/' + data.image
                 })

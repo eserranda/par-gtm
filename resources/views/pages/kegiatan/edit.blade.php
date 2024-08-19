@@ -72,7 +72,7 @@
                                 <div class="invalid-feedback"> </div>
                             </div>
                             <div class="mb-3">
-                                <img class="img-thumbnail" id="photoPreview" src="" alt="Photo Preview"
+                                <img class="img-thumbnail" id="editPhotoPreview" src="" alt="Photo Preview"
                                     style="max-width: 200px; max-height: 200px;">
                             </div>
                         </div>
@@ -93,12 +93,12 @@
 
 @push('scripts')
     <script>
-        document.getElementById('image').addEventListener('change', function(event) {
+        document.getElementById('edit_image').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('photoPreview').src = e.target.result;
+                    document.getElementById('editPhotoPreview').src = e.target.result;
                 }
                 reader.readAsDataURL(file);
             }
@@ -126,7 +126,9 @@
                 if (!data.success) {
                     Object.keys(data.messages).forEach(fieldName => {
                         const inputField = document.getElementById(fieldName);
-                        if (inputField) {
+                        if (inputField && fieldName === 'edit_image') {
+                            alert(data.messages[fieldName][0]);
+                        } else {
                             inputField.classList.add('is-invalid');
                             if (inputField.nextElementSibling) {
                                 inputField.nextElementSibling.textContent = data.messages[

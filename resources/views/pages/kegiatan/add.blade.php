@@ -64,9 +64,9 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-lable">Input File Foto</label>
-                                <input type="file" class="filestyle" data-buttonname="btn-secondary"name="image"
+                                <input type="file" class="filestyle" data-buttonname="btn-secondary" name="image"
                                     id="image" class="form-control">
-                                <div class="invalid-feedback"> </div>
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <img class="img-thumbnail" id="photoPreview" src="" alt="Photo Preview"
@@ -124,7 +124,10 @@
                 if (!data.success) {
                     Object.keys(data.messages).forEach(fieldName => {
                         const inputField = document.getElementById(fieldName);
-                        if (inputField) {
+                        if (inputField && fieldName == 'image') {
+                            alert(data.messages[fieldName][0]);
+                            // inputField.classList.add('is-invalid');
+                        } else if (inputField) {
                             inputField.classList.add('is-invalid');
                             if (inputField.nextElementSibling) {
                                 inputField.nextElementSibling.textContent = data.messages[

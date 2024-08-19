@@ -49,6 +49,9 @@ class KegiatanController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'required' => ':attribute harus diisi',
+            'image' => ':attribute harus berupa gambar',
+            'mimes' => ':attribute harus berformat jpeg,png,jpg,gif',
+            'max' => 'Ukuran :attribute maksimal 2048KB',
         ]);
 
 
@@ -102,6 +105,10 @@ class KegiatanController extends Controller
             'edit_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'required' => ':attribute harus diisi',
+            'required' => ':attribute harus diisi',
+            'image' => ':attribute harus berupa gambar',
+            'mimes' => ':attribute harus berformat jpeg,png,jpg,gif',
+            'max' => 'Ukuran :attribute maksimal 2048KB',
         ]);
 
         if ($validator->fails()) {
@@ -116,7 +123,8 @@ class KegiatanController extends Controller
             // $fileName = time() . '_' . $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extension;
-            $filePath = $file->storeAs('public/images', $fileName);
+            // $filePath = $file->storeAs('public/images', $fileName);
+            $file->move(public_path('storage/images'), $fileName);
         }
 
         $update = $kegiatan::findOrFail($request->input('id'))->update([
