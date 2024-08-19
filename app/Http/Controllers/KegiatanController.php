@@ -17,7 +17,7 @@ class KegiatanController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('image', function ($row) {
-                    return '<img src="' . asset('storage/public/images/' . $row->image) . '"   class="avatar-lg rounded" alt="img"> ';
+                    return '<img src="' . asset('storage/images/' . $row->image) . '"   class="avatar-lg rounded" alt="img"> ';
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '<div class="d-flex justify-content-start align-items-center">';
@@ -67,7 +67,7 @@ class KegiatanController extends Controller
             // $fileName = time() . '_' . $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extension;
-            $filePath = $file->storeAs('public/images', $fileName);
+            $filePath = $file->storeAs('images', $fileName);
         }
 
         $save = Kegiatan::create([
