@@ -34,8 +34,15 @@ class DashboardController extends Controller
 
     public function home()
     {
+        $ketua_umum = Pengurus::where('jabatan', 'Ketua Umum')->first('nama_pengurus', 'jabatan');
+        $ketua_satu = Pengurus::where('jabatan', 'Ketua I')->first();
+        $ketua_dua = Pengurus::where('jabatan', 'Ketua II')->first();
+        $ketua_tiga = Pengurus::where('jabatan', 'Ketua III')->first();
+        $sekeretaris_umum = Pengurus::where('jabatan', 'Sekretaris Umum')->first();
+        $wakil_sekretaris = Pengurus::where('jabatan', 'Wakil Sekretaris')->first();
+        $bendahara = Pengurus::where('jabatan', 'Bendahara')->first();
         $data = Kegiatan::latest('created_at')->get();
-        return view('pages.home.index', compact('data'));
+        return view('pages.home.index', compact('data', 'ketua_umum', 'ketua_satu', 'ketua_dua', 'ketua_tiga', 'sekeretaris_umum', 'wakil_sekretaris', 'bendahara'));
     }
 
     /**

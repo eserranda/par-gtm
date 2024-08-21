@@ -441,7 +441,7 @@
 
 
     <!-- Blog Start -->
-    <div class="container-fluid blog pb-5">
+    {{-- <div class="container-fluid blog pb-5">
         <div class="container pb-5">
             <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                 <h4 class="text-primary">Our Blog & News</h4>
@@ -544,7 +544,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Blog End -->
 
 
@@ -678,97 +678,91 @@
     <div class="container-fluid team pb-5">
         <div class="container pb-5">
             <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                <h4 class="text-primary">Our Team</h4>
-                <h1 class="display-5 mb-4">Meet Our Advisers</h1>
-                <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-                    adipisci facilis
-                    cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad
-                    culpa deserunt
-                    sint dolorem autem obcaecati, ipsam mollitia hic.
-                </p>
+                <h4 class="text-primary">Pengurus</h4>
+                <h1 class="display-5 mb-3">Pengurus KSB PAR GTM</h1>
+                <p class="mb-0 fw-6"> Periode 2021 - 2026</p>
             </div>
             <div class="row g-4">
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                     <div class="team-item">
                         <div class="team-img">
-                            <img src="{{ asset('home_assets') }}/img/team-1.jpg" class="img-fluid" alt="">
+                            <img src="{{ asset('home_assets') }}/img/no_image.png" class="img-fluid" alt="">
                         </div>
                         <div class="team-title">
-                            <h4 class="mb-0">David James</h4>
-                            <p class="mb-0">Profession</p>
-                        </div>
-                        <div class="team-icon">
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-twitter"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-0" href=""><i
-                                    class="fab fa-instagram"></i></a>
+                            <h4 class="mb-0">{{ $ketua_umum->nama_pengurus ?? '-' }}</h4>
+                            <p class="mb-0">{{ $ketua_umum->jabatan ?? 'Ketua Umum' }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
                     <div class="team-item">
                         <div class="team-img">
-                            <img src="{{ asset('home_assets') }}/img/team-2.jpg" class="img-fluid" alt="">
+                            <img src="{{ asset('home_assets') }}/img//no_image.png" class="img-fluid"
+                                alt="">
                         </div>
                         <div class="team-title">
-                            <h4 class="mb-0">David James</h4>
-                            <p class="mb-0">Profession</p>
-                        </div>
-                        <div class="team-icon">
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-twitter"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-0" href=""><i
-                                    class="fab fa-instagram"></i></a>
+                            <h4 class="mb-0">{{ $ketua_satu->nama_pengurus }}</h4>
+                            <p class="mb-0">{{ $ketua_satu->jabatan }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
                     <div class="team-item">
                         <div class="team-img">
-                            <img src="{{ asset('home_assets') }}/ /img/team-3.jpg" class="img-fluid" alt="">
+                            <img src="{{ asset('home_assets') }}/img//no_image.png" class="img-fluid"
+                                alt="">
                         </div>
                         <div class="team-title">
-                            <h4 class="mb-0">David James</h4>
-                            <p class="mb-0">Profession</p>
-                        </div>
-                        <div class="team-icon">
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-twitter"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-0" href=""><i
-                                    class="fab fa-instagram"></i></a>
+                            <h4 class="mb-0">{{ $ketua_dua->nama_pengurus }}</h4>
+                            <p class="mb-0">{{ $ketua_dua->jabatan }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
+                <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
                     <div class="team-item">
                         <div class="team-img">
-                            <img src="{{ asset('home_assets') }}/img/team-4.jpg" class="img-fluid" alt="">
+                            <img src="{{ asset('home_assets') }}/img//no_image.png" class="img-fluid"
+                                alt="">
                         </div>
                         <div class="team-title">
-                            <h4 class="mb-0">David James</h4>
-                            <p class="mb-0">Profession</p>
+                            <h4 class="mb-0">{{ $ketua_tiga->nama_pengurus }}</h4>
+                            <p class="mb-0">{{ $ketua_tiga->jabatan }}</p>
                         </div>
-                        <div class="team-icon">
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-twitter"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-3" href=""><i
-                                    class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-primary btn-sm-square rounded-circle me-0" href=""><i
-                                    class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="{{ asset('home_assets') }}/img//no_image.png" class="img-fluid"
+                                alt="">
+                        </div>
+                        <div class="team-title">
+                            <h4 class="mb-0">{{ $sekeretaris_umum->nama_pengurus ?? '-' }}</h4>
+                            <p class="mb-0">{{ $sekeretaris_umum->jabatan ?? 'Sekeretaris Umum' }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="{{ asset('home_assets') }}/img//no_image.png" class="img-fluid"
+                                alt="">
+                        </div>
+                        <div class="team-title">
+                            <h4 class="mb-0">{{ $wakil_sekretaris->nama_pengurus ?? '-' }}</h4>
+                            <p class="mb-0">{{ $wakil_sekretaris->jabatan ?? 'Wakil Sekeretaris' }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="{{ asset('home_assets') }}/img//no_image.png" class="img-fluid"
+                                alt="">
+                        </div>
+                        <div class="team-title">
+                            <h4 class="mb-0">{{ $bendahara->nama_pengurus ?? '-' }}</h4>
+                            <p class="mb-0">{{ $bendahara->jabatan ?? 'Bendahara' }}</p>
                         </div>
                     </div>
                 </div>
