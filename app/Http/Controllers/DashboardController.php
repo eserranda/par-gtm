@@ -34,8 +34,8 @@ class DashboardController extends Controller
 
     public function home()
     {
-        $kegiatans = Kegiatan::latest('created_at')->get();
-        return view('pages.home.index', compact('kegiatans'));
+        $data = Kegiatan::latest('created_at')->get();
+        return view('pages.home.index', compact('data'));
     }
 
     /**
