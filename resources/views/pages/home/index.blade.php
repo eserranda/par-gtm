@@ -83,19 +83,9 @@
                     <a href="#visi-misi" class="nav-item nav-link">Visi Misi</a>
                     <a href="#kegiatan" class="nav-item nav-link">Kegiatan</a>
                     <a href="#pengurus" class="nav-item nav-link">Pengurus</a>
-                    {{-- <div class="nav-item dropdown">
-                        <a href="#" class="nav-link" data-bs-toggle="dropdown">
-                            <span class="dropdown-toggle">Pages</span>
-                        </a>
-                        <div class="dropdown-menu m-0">
-                            <a href="feature.html" class="dropdown-item">Our Features</a>
-                            <a href="team.html" class="dropdown-item">Our team</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="offer.html" class="dropdown-item">Our offer</a>
-                            <a href="FAQ.html" class="dropdown-item">FAQs</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
+                    <a href="#gereja" class="nav-item nav-link">Gereja</a>
+                    <a href="/home-klasis/" class="nav-item nav-link">Klasis</a>
+                    {{--  
                     <a href="contact.html" class="nav-item nav-link">Contact Us</a> --}}
                 </div>
                 {{-- <a href="#" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">Get
@@ -395,6 +385,42 @@
     </div>
     <!-- Team End -->
 
+    <!-- Testimonial Start -->
+    <div class="container-fluid testimonial pb-5" id="gereja">
+        <div class="container pb-5">
+            <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s">
+                <h4 class="text-primary">Gereja</h4>
+                <h1 class="display-5 mb-4">Daftar Gereja</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama Jemaat</th>
+                            <th scope="col">Pelayan/Pendeta</th>
+                            <th scope="col">Alamat</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($jemaat as $d)
+                            <tr>
+                                <th scope="row">{{ $loop->iteration }}</th>
+                                <td>{{ $d->nama_jemaat }}</td>
+                                <td>{{ $d->pelayan }}</td>
+                                <td>{{ $d->alamat }} </td>
+                                <td><a class="btn btn-sm btn-primary"
+                                        href=" {{ route('jemaat.showJemaat', $d->nama_jemaat) }}">Lihat
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!-- Testimonial End -->
+
     <!-- Copyright Start -->
     <div class="container-fluid copyright py-4">
         <div class="container">
@@ -416,6 +442,7 @@
         </div>
     </div>
     <!-- Copyright End -->
+
 
 
     <!-- Back to Top -->

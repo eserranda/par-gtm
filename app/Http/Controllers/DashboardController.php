@@ -10,6 +10,7 @@ use App\Models\Pengurus;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
 use App\Models\PengurusJemaat;
+use App\Models\PengurusKlasis;
 use App\Models\AnggaranBelanja;
 use App\Models\ProgramKerjaKlasis;
 use Illuminate\Support\Facades\Auth;
@@ -42,23 +43,28 @@ class DashboardController extends Controller
         $wakil_sekretaris = Pengurus::where('jabatan', 'Wakil Sekretaris')->first();
         $bendahara = Pengurus::where('jabatan', 'Bendahara')->first();
         $data = Kegiatan::latest('created_at')->get();
-        return view('pages.home.index', compact('data', 'ketua_umum', 'ketua_satu', 'ketua_dua', 'ketua_tiga', 'sekeretaris_umum', 'wakil_sekretaris', 'bendahara'));
+        $jemaat = Jemaat::all();
+        return view('pages.home.index', compact('data', 'ketua_umum', 'ketua_satu', 'ketua_dua', 'ketua_tiga', 'sekeretaris_umum', 'wakil_sekretaris', 'bendahara', 'jemaat'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function klasis()
     {
-        //
+        $klasis = Klasis::all();
+        $pengurus_klasis = PengurusKlasis::all();
+        return view('pages.home.klasis', compact('klasis', 'pengurus_klasis'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Dashboard $dashboard)
+    public function showJemaat($nama_jemaat)
     {
-        //
+        if ($nama_jemaat == "Jemaat Rantekamase") {
+            $pengurus_jemaat = PengurusJemaat::all();
+            $jemaat = Jemaat::all();
+            return view('pages.home.jemaat_satu', compact('pengurus_jemaat', 'jemaat'));
+        }
     }
 
     /**

@@ -40,6 +40,8 @@ Route::post('login', [UserController::class, 'login'])->middleware('guest');
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/',  [DashboardController::class, 'home']);
+Route::get('/home-klasis',  [DashboardController::class, 'klasis']);
+Route::get('/home-jemaat/{nama_jemaat}',  [DashboardController::class, 'showJemaat'])->name('jemaat.showJemaat');
 
 // Route::get('/', function () {
 //     return view('pages/home/index');
