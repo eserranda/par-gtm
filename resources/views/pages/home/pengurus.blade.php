@@ -91,95 +91,9 @@
     <!-- Carousel End -->
 @endsection
 
-@section('visi_misi')
-    <div class="container-fluid offer-section py-5" id="visi-misi">
-        <div class="container pb-5">
-            <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                {{-- <h4 class="text-primary">Our Offer</h4> --}}
-                <h1 class="display-5 mb-4">Visi Misi</h1>
-                {{-- <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur adipisci facilis
-                cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad culpa deserunt
-                sint dolorem autem obcaecati, ipsam mollitia hic.
-            </p> --}}
-            </div>
-            <div class="row g-5 align-items-center">
-                <div class="col-xl-5 wow fadeInLeft" data-wow-delay="0.2s">
-                    <div class="nav nav-pills bg-light rounded p-5">
-                        <h1 class="display-7 mb-4">Visi</h1>
-                        <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseOne">
-                            <h5 class="mb-0">1.Melayani anak dan remaja untuk menanamkan nilai-nilai iman Kristen
-                                berdasarkan Alkitab</h5>
-                        </a>
-                        <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseTwo">
-                            <h5 class="mb-0">2.Memperlengkapi anak dan remaja agar menerima dan menghayati panggilan
-                                Allah sehingga mengaku “YESUS KRISTUS ITULAH TUHAN DAN JURUSELAMAT”.</h5>
-                        </a>
-                        <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseThree">
-                            <h5 class="mb-0">3.Mendidik Anak dan remaja agar menjadi generasi yang takut akan Tuhan
-                            </h5>
-                        </a>
-                        <a class="accordion-link p-4 mb-0" data-bs-toggle="pill" href="#collapseFour">
-                            <h5 class="mb-0">4.Memperlengkapi warga gereja yang dipanggil dan diutus bagi pekerjaan
-                                pelayanan PAR GTM.</h5>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-7 wow fadeInRight" data-wow-delay="0.4s">
-                    <div class="tab-content">
-                        <div id="collapseOne" class="tab-pane fade show p-0 active">
-                            <div class="col-md-12">
-                                <h1 class="display-5 mb-4">Misi</h1>
-                                <p class="mb-4 fs-2 fw-bold">Membangun iman dan karakter anak-anak serta remaja melalui
-                                    kegiatan
-                                    yang inspiratif dan edukatif, serta menyediakan lingkungan yang aman dan mendukung
-                                    untuk pertumbuhan rohani.
-                                </p>
-                                {{-- <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a> --}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-
-@section('kegiatan')
-    <!-- Services Start -->
-    <div class="container-fluid service pb-5" id="kegiatan">
-        <div class="container pb-5">
-            <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                <h4 class="text-primary">Kegiatan</h4>
-                <h1 class="display-5 mb-4">Kegiatan PAR GTM</h1>
-            </div>
-            <div class="row g-4">
-                @foreach ($data as $d)
-                    <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="{{ asset('/storage/images/' . $d->image) }}" class="img-fluid rounded-top w-100"
-                                    alt="Image">
-
-
-                            </div>
-                            <div class="rounded-bottom p-4">
-                                <a href="#" class="h4 d-inline-block mb-4">{{ $d->kegiatan }}</a>
-                                <p class="mb-4"> {{ $d->keterangan }} </p>
-                                {{-- <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a> --}}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-
-            </div>
-        </div>
-    </div>
-    <!-- Services End -->
-@endsection
-
 @section('pengurus')
     <!-- Team Start -->
-    <div class="container-fluid team pb-5" id="pengurus">
+    <div class="container-fluid team pb-5 mt-5" id="pengurus">
         <div class="container pb-5">
             <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                 <h4 class="text-primary">Pengurus</h4>

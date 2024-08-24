@@ -17,9 +17,34 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function visiMisi()
+    {
+        return view('pages.home.visi-misi');
+    }
+
+    public function kegiatan()
+    {
+        $data = Kegiatan::latest('created_at')->get();
+        return view('pages.home.kegiatan', compact('data'));
+    }
+
+    public function pengurus()
+    {
+        $ketua_umum = Pengurus::where('jabatan', 'Ketua Umum')->first('nama_pengurus', 'jabatan');
+        $ketua_satu = Pengurus::where('jabatan', 'Ketua I')->first();
+        $ketua_dua = Pengurus::where('jabatan', 'Ketua II')->first();
+        $ketua_tiga = Pengurus::where('jabatan', 'Ketua III')->first();
+        $sekeretaris_umum = Pengurus::where('jabatan', 'Sekretaris Umum')->first();
+        $wakil_sekretaris = Pengurus::where('jabatan', 'Wakil Sekretaris')->first();
+        $bendahara = Pengurus::where('jabatan', 'Bendahara')->first();
+        return view('pages.home.pengurus', compact('ketua_umum', 'ketua_satu', 'ketua_dua', 'ketua_tiga', 'sekeretaris_umum', 'wakil_sekretaris', 'bendahara'));
+    }
+
+    public function showGereja()
+    {
+        $jemaat = Jemaat::all();
+        return view('pages.home.list-gereja', compact('jemaat'));
+    }
     public function index()
     {
         $klasis = Klasis::count();
@@ -58,13 +83,11 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showJemaat($nama_jemaat)
+    public function showJemaat($id)
     {
-        if ($nama_jemaat == "Jemaat Rantekamase") {
-            $pengurus_jemaat = PengurusJemaat::all();
-            $jemaat = Jemaat::all();
-            return view('pages.home.jemaat_satu', compact('pengurus_jemaat', 'jemaat'));
-        }
+        $jemaat = Jemaat::where('id', $id)->first();
+        $pengurus_jemaat = PengurusJemaat::where('id_jemaat', $id)->get();
+        return view('pages.home.gereja', compact('jemaat', 'pengurus_jemaat'));
     }
 
     /**

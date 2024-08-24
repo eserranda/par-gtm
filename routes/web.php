@@ -41,7 +41,11 @@ Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/',  [DashboardController::class, 'home']);
 Route::get('/home-klasis',  [DashboardController::class, 'klasis']);
-Route::get('/home-jemaat/{nama_jemaat}',  [DashboardController::class, 'showJemaat'])->name('jemaat.showJemaat');
+Route::get('/home-jemaat/{id}',  [DashboardController::class, 'showJemaat'])->name('jemaat.showJemaat');
+Route::get('/gereja',  [DashboardController::class, 'showGereja']);
+Route::get('/visi-misi',  [DashboardController::class, 'visiMisi']);
+Route::get('/home-kegiatan',  [DashboardController::class, 'kegiatan']);
+Route::get('/home-pengurus',  [DashboardController::class, 'pengurus']);
 
 // Route::get('/', function () {
 //     return view('pages/home/index');
@@ -80,7 +84,7 @@ Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function
     Route::post('/store', 'store');
     Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
-})->middleware('auth');
+});
 
 Route::prefix('program-kerja-jemaat')->controller(ProgramKerjaJemaatController::class)->group(function () {
     Route::get('/', 'index')->name('program-kerja-jemaat.index')->middleware('auth');
