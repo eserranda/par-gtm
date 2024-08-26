@@ -28,8 +28,8 @@
                     <div class="card overflow-hidden">
                         <div class="card-body pt-0">
                             <div class="p-3">
-                                <h4 class="font-size-20 mx-1 fw-bold text-center">Selemat Datang</h4>
-                                <p class="text-muted text-center">Login untuk masuk ke adminstrator PAR-GTM</p>
+                                <h4 class="font-size-20 mx-1 fw-bold text-center">Selamat Datang</h4>
+                                <p class="text-muted text-center">Login untuk masuk ke administrator PAR-GTM</p>
                                 <form class="form-horizontal " method="POST" action="{{ route('login') }}">
                                     @csrf
                                     @error('login')
