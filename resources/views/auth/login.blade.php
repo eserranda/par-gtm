@@ -54,12 +54,12 @@
                                             LogIn</button>
                                     </div>
 
-                                    <div class="form-group mb-0 row">
+                                    {{-- <div class="form-group mb-0 row">
                                         <div class="col-12 mt-4">
                                             <a href="pages-recoverpw.html" class="text-muted">
                                                 <i class="mdi mdi-lock"></i> Lupa password?</a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </form>
                             </div>
                         </div>
